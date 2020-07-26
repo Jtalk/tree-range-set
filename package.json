@@ -1,0 +1,36 @@
+{
+  "name": "tree-range-set",
+  "version": "1.0.0",
+  "description": "A RangeSet implementation based on binary search trees",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jtalk/tree-range-set.git"
+  },
+  "keywords": [
+    "range",
+    "set",
+    "range set"
+  ],
+  "author": "Roman Nazarenko <me@jtalk.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jtalk/tree-range-set/issues"
+  },
+  "homepage": "https://github.com/Jtalk/tree-range-set#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.7",
+    "jest": "^26.1.0",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.1.3",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.7"
+  }
+}
