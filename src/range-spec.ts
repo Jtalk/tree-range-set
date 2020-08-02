@@ -57,7 +57,7 @@ export class NumberSpec extends AbstractRangeSpec<number> {
     return a === b;
   }
   isInfinity(value: number): boolean {
-    return +value === Infinity;
+    return +value === Infinity || -value === Infinity;
   }
   isGreaterThan(value: number, than: number): boolean {
     return value > than;
