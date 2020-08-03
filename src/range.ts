@@ -44,7 +44,7 @@ export class Range<T> {
     return this.spec.isInfinity(this.lower);
   }
   get isEmpty(): boolean {
-    return this.spec.isEqual(this.lower, this.upper) && !this.isLowerEnclosed && !this.isUpperEnclosed;
+    return this.spec.isEqual(this.lower, this.upper) && (!this.isLowerEnclosed || !this.isUpperEnclosed);
   }
 
   intersection(other: Range<T>): Range<T> {
