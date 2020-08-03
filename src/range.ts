@@ -73,6 +73,18 @@ export class Range<T> {
     const [to, toEnclosed] = this.max([this.upper, this.isUpperEnclosed], [other.upper, other.isUpperEnclosed], false);
     return new Range<T>(this.spec, from, to, fromEnclosed, toEnclosed);
   }
+  subtract(other: Range<T>): Range<T>[] {
+    if (this.intersection(other).isEmpty) return [this];
+    if (this.equals(other)) return [];
+    const result: Range<T>[] = [];
+    if (this.isLowerBefore(other)) {
+      result.push(new Range(this.spec, this.lower, other.lower, this.isLowerEnclosed, !other.isLowerEnclosed));
+    }
+    if (this.isUpperAfter(other)) {
+      result.push(new Range(this.spec, other.upper, this.upper, !other.isUpperEnclosed, this.isUpperEnclosed));
+    }
+    return result.filter((r) => !r.isEmpty);
+  }
 
   adjacent(other: Range<T>): boolean {
     return this.adjacentRight(other) || this.adjacentLeft(other);
@@ -125,5 +137,36 @@ export class Range<T> {
     } else {
       return [b, bEnclosed];
     }
+  }
+
+  private isLowerAfter(than: Range<T>): boolean {
+    return (
+      this.spec.isGreaterThan(this.lower, than.lower) ||
+      (this.spec.isEqual(this.lower, than.lower) && !this.isLowerEnclosed && than.isLowerEnclosed)
+    );
+  }
+  private isLowerBefore(than: Range<T>): boolean {
+    return (
+      this.spec.isLessThan(this.lower, than.lower) ||
+      (this.spec.isEqual(this.lower, than.lower) && this.isLowerEnclosed && !than.isLowerEnclosed)
+    );
+  }
+  private isLowerEqual(to: Range<T>): boolean {
+    return this.spec.isEqual(this.lower, to.lower) && this.isLowerEnclosed === to.isLowerEnclosed;
+  }
+  private isUpperAfter(than: Range<T>): boolean {
+    return (
+      this.spec.isGreaterThan(this.upper, than.upper) ||
+      (this.spec.isEqual(this.upper, than.upper) && this.isUpperEnclosed && !than.isUpperEnclosed)
+    );
+  }
+  private isUpperBefore(than: Range<T>): boolean {
+    return (
+      this.spec.isLessThan(this.upper, than.upper) ||
+      (this.spec.isEqual(this.upper, than.upper) && !this.isUpperEnclosed && than.isUpperEnclosed)
+    );
+  }
+  private isUpperEqual(to: Range<T>): boolean {
+    return this.spec.isEqual(this.upper, to.upper) && this.isUpperEnclosed === to.isUpperEnclosed;
   }
 }
