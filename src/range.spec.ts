@@ -282,6 +282,11 @@ describe("Range", () => {
   describe("intersection", () => {
     it.each`
       range1                     | range2                     | expected
+      ${Range.empty()}           | ${Range.empty()}           | ${Range.empty()}
+      ${Range.open(10, 20)}      | ${Range.empty()}           | ${Range.empty()}
+      ${Range.close(10, 20)}     | ${Range.empty()}           | ${Range.empty()}
+      ${Range.openClose(10, 20)} | ${Range.empty()}           | ${Range.empty()}
+      ${Range.closeOpen(10, 20)} | ${Range.empty()}           | ${Range.empty()}
       ${Range.open(10, 20)}      | ${Range.open(15, 30)}      | ${Range.open(15, 20)}
       ${Range.close(10, 20)}     | ${Range.close(15, 30)}     | ${Range.close(15, 20)}
       ${Range.openClose(10, 20)} | ${Range.openClose(15, 30)} | ${Range.openClose(15, 20)}

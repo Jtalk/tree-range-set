@@ -48,8 +48,7 @@ export class Range<T> {
   }
 
   intersection(other: Range<T>): Range<T> {
-    if (this.isEmpty) return other;
-    if (other.isEmpty) return this;
+    if (this.isEmpty || other.isEmpty) return Range.empty(this.spec);
     const [from, fromEnclosed] = this.max(
       [this.lower, this.isLowerEnclosed],
       [other.lower, other.isLowerEnclosed],
