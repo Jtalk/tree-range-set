@@ -1,6 +1,7 @@
 import { Range } from "./range";
-import { RangeSetTree, Comparator, BintreeRBRangeSetTree } from "./range-set-tree";
+import { RangeSetTree, Comparator } from "./range-set-tree";
 import { RangeSpec, NumberSpec } from "./range-spec";
+import * as BinTreeAdapter from "./range-set-tree-bintree";
 
 export class RangeSet<T> {
   private constructor(
@@ -15,7 +16,7 @@ export class RangeSet<T> {
   }
   static of<T>(
     spec: RangeSpec<T>,
-    treeType: new (comp: Comparator<Range<T>>) => RangeSetTree<Range<T>> = BintreeRBRangeSetTree
+    treeType?: new (comp: Comparator<Range<T>>) => RangeSetTree<Range<T>>
   ): RangeSet<T> {
     const comp = (a: Range<T>, b: Range<T>) => {
       const upperComp = spec.comparator(a.upper, b.upper);
@@ -24,6 +25,17 @@ export class RangeSet<T> {
       if (a.isUpperEnclosed && !b.isUpperEnclosed) return 1;
       return 0;
     };
+    if (!treeType) {
+      const defaultAdapter: typeof BinTreeAdapter = require("./range-set-tree-bintree");
+      treeType = defaultAdapter.BintreeRBRangeSetTree;
+      if (!treeType) {
+        throw Error(
+          `No compatible binary tree implementation was provided for this RangeSet: ` +
+            `you should either install "bintree", ` +
+            `or provide a compatible binary tree adapter by implementing RangeSetTree and supplying its constructor to this of() invocation`
+        );
+      }
+    }
     return new RangeSet<T>(new treeType(comp), spec);
   }
 
