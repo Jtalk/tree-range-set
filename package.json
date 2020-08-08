@@ -8,6 +8,7 @@
     "build": "tsc --build tsconfig.build.json",
     "build:perf": "tsc --build tsconfig.perf.json",
     "perf": "npm run build:perf && node dist/range-set.perf.js",
+    "doc": "typedoc --tsconfig tsconfig.build.json",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -40,6 +41,7 @@
     "ts-jest": "^26.1.3",
     "ts-node": "^8.10.2",
     "tslint": "^6.1.2",
+    "typedoc": "^0.17.8",
     "typescript": "^3.9.7"
   },
   "peerDependencies": {
