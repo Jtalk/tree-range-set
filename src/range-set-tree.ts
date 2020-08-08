@@ -1,3 +1,5 @@
+import { Range } from "./range";
+
 export type Comparator<T> = (a: T, b: T) => number;
 export interface RangeSetTree<T> {
   size: number;

@@ -3,22 +3,26 @@ import { RangeSpec, NumberSpec } from "./range-spec";
 export class Range<T> {
   static open<T>(from: T, to: T, spec?: RangeSpec<T>): Range<T> {
     spec = spec || (new NumberSpec() as any);
-    if (!spec.isGreaterOrEqualTo(to, from)) throw Error("Upper bound must be greater than equal to the lower");
+    if (!spec.isGreaterOrEqualTo(to, from))
+      throw Error("Upper bound must be greater than equal to the lower");
     return new Range<T>(spec, from, to, false, false);
   }
   static close<T>(from: T, to: T, spec?: RangeSpec<T>): Range<T> {
     spec = spec || (new NumberSpec() as any);
-    if (!spec.isGreaterOrEqualTo(to, from)) throw Error("Upper bound must be greater than equal to the lower");
+    if (!spec.isGreaterOrEqualTo(to, from))
+      throw Error("Upper bound must be greater than equal to the lower");
     return new Range<T>(spec, from, to, !spec.isInfinity(from), !spec.isInfinity(to));
   }
   static openClose<T>(from: T, to: T, spec?: RangeSpec<T>): Range<T> {
     spec = spec || (new NumberSpec() as any);
-    if (!spec.isGreaterOrEqualTo(to, from)) throw Error("Upper bound must be greater than equal to the lower");
+    if (!spec.isGreaterOrEqualTo(to, from))
+      throw Error("Upper bound must be greater than equal to the lower");
     return new Range<T>(spec, from, to, false, !spec.isInfinity(to));
   }
   static closeOpen<T>(from: T, to: T, spec?: RangeSpec<T>): Range<T> {
     spec = spec || (new NumberSpec() as any);
-    if (!spec.isGreaterOrEqualTo(to, from)) throw Error("Upper bound must be greater than equal to the lower");
+    if (!spec.isGreaterOrEqualTo(to, from))
+      throw Error("Upper bound must be greater than equal to the lower");
     return new Range<T>(spec, from, to, !spec.isInfinity(from), false);
   }
   static singleton<T>(value: T, spec?: RangeSpec<T>): Range<T> {
@@ -35,7 +39,13 @@ export class Range<T> {
     public readonly upper: T,
     public readonly isLowerEnclosed: boolean,
     public readonly isUpperEnclosed: boolean
-  ) {}
+  ) {
+    if (this.spec.isLessThan(this.upper, this.lower)) {
+      throw Error(
+        `Upper bound ${this.upper} must be greater than or equal to the lower bound ${this.lower}`
+      );
+    }
+  }
 
   get isUpperInfinity(): boolean {
     return this.spec.isInfinity(this.upper);
@@ -44,7 +54,9 @@ export class Range<T> {
     return this.spec.isInfinity(this.lower);
   }
   get isEmpty(): boolean {
-    return this.spec.isEqual(this.lower, this.upper) && (!this.isLowerEnclosed || !this.isUpperEnclosed);
+    return (
+      this.spec.isEqual(this.lower, this.upper) && (!this.isLowerEnclosed || !this.isUpperEnclosed)
+    );
   }
 
   intersection(other: Range<T>): Range<T> {
@@ -54,7 +66,11 @@ export class Range<T> {
       [other.lower, other.isLowerEnclosed],
       true
     );
-    const [to, toEnclosed] = this.min([this.upper, this.isUpperEnclosed], [other.upper, other.isUpperEnclosed], false);
+    const [to, toEnclosed] = this.min(
+      [this.upper, this.isUpperEnclosed],
+      [other.upper, other.isUpperEnclosed],
+      false
+    );
     if (this.spec.isGreaterThan(from, to)) return Range.empty(this.spec);
     if (this.spec.isEqual(from, to) && !(fromEnclosed && toEnclosed)) return Range.empty(this.spec);
     return new Range<T>(this.spec, from, to, fromEnclosed, toEnclosed);
@@ -70,7 +86,11 @@ export class Range<T> {
       [other.lower, other.isLowerEnclosed],
       true
     );
-    const [to, toEnclosed] = this.max([this.upper, this.isUpperEnclosed], [other.upper, other.isUpperEnclosed], false);
+    const [to, toEnclosed] = this.max(
+      [this.upper, this.isUpperEnclosed],
+      [other.upper, other.isUpperEnclosed],
+      false
+    );
     return new Range<T>(this.spec, from, to, fromEnclosed, toEnclosed);
   }
   subtract(other: Range<T>): Range<T>[] {
@@ -78,10 +98,14 @@ export class Range<T> {
     if (this.equals(other)) return [];
     const result: Range<T>[] = [];
     if (this.isLowerBefore(other)) {
-      result.push(new Range(this.spec, this.lower, other.lower, this.isLowerEnclosed, !other.isLowerEnclosed));
+      result.push(
+        new Range(this.spec, this.lower, other.lower, this.isLowerEnclosed, !other.isLowerEnclosed)
+      );
     }
     if (this.isUpperAfter(other)) {
-      result.push(new Range(this.spec, other.upper, this.upper, !other.isUpperEnclosed, this.isUpperEnclosed));
+      result.push(
+        new Range(this.spec, other.upper, this.upper, !other.isUpperEnclosed, this.isUpperEnclosed)
+      );
     }
     return result.filter((r) => !r.isEmpty);
   }
@@ -119,19 +143,31 @@ export class Range<T> {
   }
 
   toString(): string {
-    return `${this.isLowerEnclosed ? "[" : "("}${this.lower}; ${this.upper}${this.isUpperEnclosed ? "]" : ")"}`;
+    return `${this.isLowerEnclosed ? "[" : "("}${this.lower}; ${this.upper}${
+      this.isUpperEnclosed ? "]" : ")"
+    }`;
   }
 
-  private min([a, aEnclosed]: [T, boolean], [b, bEnclosed]: [T, boolean], lower: boolean): [T, boolean] {
-    if (this.spec.isEqual(a, b)) return [a, lower ? aEnclosed || bEnclosed : aEnclosed && bEnclosed];
+  private min(
+    [a, aEnclosed]: [T, boolean],
+    [b, bEnclosed]: [T, boolean],
+    lower: boolean
+  ): [T, boolean] {
+    if (this.spec.isEqual(a, b))
+      return [a, lower ? aEnclosed || bEnclosed : aEnclosed && bEnclosed];
     if (this.spec.isLessThan(a, b)) {
       return [a, aEnclosed];
     } else {
       return [b, bEnclosed];
     }
   }
-  private max([a, aEnclosed]: [T, boolean], [b, bEnclosed]: [T, boolean], lower: boolean): [T, boolean] {
-    if (this.spec.isEqual(a, b)) return [a, lower ? aEnclosed && bEnclosed : aEnclosed || bEnclosed];
+  private max(
+    [a, aEnclosed]: [T, boolean],
+    [b, bEnclosed]: [T, boolean],
+    lower: boolean
+  ): [T, boolean] {
+    if (this.spec.isEqual(a, b))
+      return [a, lower ? aEnclosed && bEnclosed : aEnclosed || bEnclosed];
     if (this.spec.isGreaterThan(a, b)) {
       return [a, aEnclosed];
     } else {

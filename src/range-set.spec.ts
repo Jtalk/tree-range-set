@@ -1,5 +1,7 @@
 import { Range } from "./range";
 import { RangeSet } from "./range-set";
+import { BintreeRangeSetTree } from "./range-set-tree-bintree";
+import { RangeSpec, AbstractRangeSpec } from "./range-spec";
 
 describe("RangeSet", () => {
   describe("empty", () => {
@@ -329,5 +331,61 @@ describe("RangeSet", () => {
       expect(instance.enclosing(Range.closeOpen(101, 120))).toEqual(Range.open(100, 120));
       expect(instance.enclosing(Range.closeOpen(150, 155))).toBeUndefined();
     });
+  });
+  describe("BTree-based implementation", () => {
+    const instance = RangeSet.numeric(BintreeRangeSetTree);
+    instance.add(Range.closeOpen(30, 40));
+    instance.add(Range.openClose(10, 20));
+    instance.add(Range.close(50, 60));
+    instance.add(Range.singleton(45));
+
+    instance.subtract(Range.open(15, 35));
+    instance.subtract(Range.singleton(54));
+    instance.subtract(Range.open(39, 51));
+
+    expect(instance.subranges).toEqual([
+      Range.openClose(10, 15),
+      Range.close(35, 39),
+      Range.closeOpen(51, 54),
+      Range.openClose(54, 60),
+    ]);
+  });
+  describe("custom type", () => {
+    class DateSpec extends AbstractRangeSpec<Date> implements RangeSpec<Date> {
+      unit(): Date {
+        return new Date(1);
+      }
+      plus(a: Date, b: Date): Date {
+        return new Date(a.getTime() + b.getTime());
+      }
+      minus(a: Date, b: Date): Date {
+        return new Date(a.getTime() - b.getTime());
+      }
+      get comparator(): (a: Date, b: Date) => number {
+        return (a, b) => a.getTime() - b.getTime();
+      }
+      isInfinity(value: Date): boolean {
+        return false;
+      }
+    }
+    const spec = new DateSpec();
+    const instance = RangeSet.of(spec);
+    instance.add(
+      Range.closeOpen(new Date("2020-07-01T12:00:00Z"), new Date("2020-07-01T18:00:00Z"), spec)
+    );
+    instance.add(
+      Range.closeOpen(new Date("2020-07-02T12:00:00Z"), new Date("2020-07-02T18:00:00Z"), spec)
+    );
+    instance.add(
+      Range.closeOpen(new Date("2020-07-03T12:00:00Z"), new Date("2020-07-03T18:00:00Z"), spec)
+    );
+    instance.subtract(
+      Range.closeOpen(new Date("2020-07-01T17:00:00Z"), new Date("2020-07-03T13:00:00Z"), spec)
+    );
+
+    expect(instance.subranges).toEqual([
+      Range.closeOpen(new Date("2020-07-01T12:00:00Z"), new Date("2020-07-01T17:00:00Z"), spec),
+      Range.closeOpen(new Date("2020-07-03T13:00:00Z"), new Date("2020-07-03T18:00:00Z"), spec),
+    ]);
   });
 });
