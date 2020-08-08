@@ -115,8 +115,8 @@ describe("Range", () => {
     it("empty range explicitly", () => {
       const result = Range.empty();
       expect(result.isEmpty).toBe(true);
-      expect(result.lower).toBe(1);
-      expect(result.upper).toBe(1);
+      expect(result.lower).toBe(null);
+      expect(result.upper).toBe(null);
       expect(result.isLowerEnclosed).toBe(false);
       expect(result.isUpperEnclosed).toBe(false);
       expect(result.isLowerInfinity).toBe(false);
@@ -161,18 +161,24 @@ describe("Range", () => {
       ${Range.open(-Infinity, 20)}       | ${Range.openClose(-Infinity, 17)}
       ${Range.closeOpen(10, Infinity)}   | ${Range.closeOpen(15, Infinity)}
       ${Range.open(-Infinity, Infinity)} | ${Range.open(-Infinity, Infinity)}
-    `("$range1 contains $range2", ({ range1, range2 }: { range1: Range<number>; range2: Range<number> }) => {
-      expect(range1.contains(range2)).toBe(true);
-    });
+    `(
+      "$range1 contains $range2",
+      ({ range1, range2 }: { range1: Range<number>; range2: Range<number> }) => {
+        expect(range1.contains(range2)).toBe(true);
+      }
+    );
     it.each`
       range1                     | range2
       ${Range.openClose(10, 20)} | ${Range.openClose(9, 10)}
       ${Range.openClose(10, 20)} | ${Range.openClose(20, 21)}
       ${Range.openClose(10, 20)} | ${Range.openClose(30, 40)}
       ${Range.openClose(10, 20)} | ${Range.openClose(0, 5)}
-    `("$range1 does not contain $range2", ({ range1, range2 }: { range1: Range<number>; range2: Range<number> }) => {
-      expect(range1.contains(range2)).toBe(false);
-    });
+    `(
+      "$range1 does not contain $range2",
+      ({ range1, range2 }: { range1: Range<number>; range2: Range<number> }) => {
+        expect(range1.contains(range2)).toBe(false);
+      }
+    );
 
     it.each`
       range                              | element
@@ -185,9 +191,12 @@ describe("Range", () => {
       ${Range.openClose(-Infinity, 20)}  | ${5}
       ${Range.closeOpen(10, Infinity)}   | ${15}
       ${Range.open(-Infinity, Infinity)} | ${500}
-    `("$range contains $element", ({ range, element }: { range: Range<number>; element: number }) => {
-      expect(range.contains(element)).toBe(true);
-    });
+    `(
+      "$range contains $element",
+      ({ range, element }: { range: Range<number>; element: number }) => {
+        expect(range.contains(element)).toBe(true);
+      }
+    );
     it.each`
       range                             | element
       ${Range.closeOpen(10, 20)}        | ${20}
@@ -196,9 +205,12 @@ describe("Range", () => {
       ${Range.openClose(10, 20)}        | ${30}
       ${Range.openClose(-Infinity, 10)} | ${15}
       ${Range.closeOpen(10, Infinity)}  | ${5}
-    `("$range does not contain $element", ({ range, element }: { range: Range<number>; element: number }) => {
-      expect(range.contains(element)).toBe(false);
-    });
+    `(
+      "$range does not contain $element",
+      ({ range, element }: { range: Range<number>; element: number }) => {
+        expect(range.contains(element)).toBe(false);
+      }
+    );
   });
   describe("equals", () => {
     it.each`
@@ -448,7 +460,7 @@ describe("Range", () => {
       ${Range.closeOpen(10, 20)}         | ${"[10; 20)"}
       ${Range.openClose(-20, -10)}       | ${"(-20; -10]"}
       ${Range.singleton(50)}             | ${"[50; 50]"}
-      ${Range.empty()}                   | ${"(1; 1)"}
+      ${Range.empty()}                   | ${"{}"}
       ${Range.open(-Infinity, Infinity)} | ${"(-Infinity; Infinity)"}
     `("should serialise into $expected", ({ value, expected }) => {
       expect(value.toString()).toEqual(expected);

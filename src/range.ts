@@ -30,7 +30,7 @@ export class Range<T> {
   }
   static empty<T>(spec?: RangeSpec<T>): Range<T> {
     spec = spec || (new NumberSpec() as any);
-    return new Range<T>(spec, spec.unit(), spec.unit(), false, false);
+    return new Range<T>(spec, null, null, false, false);
   }
 
   private constructor(
@@ -40,7 +40,7 @@ export class Range<T> {
     public readonly isLowerEnclosed: boolean,
     public readonly isUpperEnclosed: boolean
   ) {
-    if (this.spec.isLessThan(this.upper, this.lower)) {
+    if ((this.lower || this.upper) && this.spec.isLessThan(this.upper, this.lower)) {
       throw Error(
         `Upper bound ${this.upper} must be greater than or equal to the lower bound ${this.lower}`
       );
@@ -143,6 +143,7 @@ export class Range<T> {
   }
 
   toString(): string {
+    if (this.isEmpty) return "{}";
     return `${this.isLowerEnclosed ? "[" : "("}${this.lower}; ${this.upper}${
       this.isUpperEnclosed ? "]" : ")"
     }`;

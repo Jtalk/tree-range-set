@@ -44,32 +44,5 @@ describe("RangeSpec", () => {
       expect(instance.isInfinity(-Infinity)).toBe(true);
       expect(instance.isInfinity(10)).toBe(false);
     });
-    it("operations", () => {
-      const instance = new NumberSpec();
-
-      expect(instance.unit()).toEqual(1);
-
-      expect(instance.plus(10, 20)).toEqual(30);
-      expect(instance.plus(10, Infinity)).toEqual(Infinity);
-      expect(instance.plus(10, -Infinity)).toEqual(-Infinity);
-      expect(instance.minus(10, 20)).toEqual(-10);
-      expect(instance.minus(10, -Infinity)).toEqual(Infinity);
-      expect(instance.minus(10, Infinity)).toEqual(-Infinity);
-      expect(instance.minus(-Infinity, 10)).toEqual(-Infinity);
-      expect(instance.minus(Infinity, 10)).toEqual(Infinity);
-
-      expect(instance.min(10, 20)).toEqual(10);
-      expect(instance.min(20, 10)).toEqual(10);
-      expect(instance.min(-Infinity, 10)).toEqual(-Infinity);
-      expect(instance.min(10, -Infinity)).toEqual(-Infinity);
-      expect(instance.min(Infinity, 10)).toEqual(10);
-      expect(instance.min(10, Infinity)).toEqual(10);
-      expect(instance.max(10, 20)).toEqual(20);
-      expect(instance.max(20, 10)).toEqual(20);
-      expect(instance.max(-Infinity, 10)).toEqual(10);
-      expect(instance.max(10, -Infinity)).toEqual(10);
-      expect(instance.max(Infinity, 10)).toEqual(Infinity);
-      expect(instance.max(10, Infinity)).toEqual(Infinity);
-    });
   });
 });

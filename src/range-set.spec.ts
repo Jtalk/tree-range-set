@@ -352,15 +352,6 @@ describe("RangeSet", () => {
   });
   describe("custom type", () => {
     class DateSpec extends AbstractRangeSpec<Date> implements RangeSpec<Date> {
-      unit(): Date {
-        return new Date(1);
-      }
-      plus(a: Date, b: Date): Date {
-        return new Date(a.getTime() + b.getTime());
-      }
-      minus(a: Date, b: Date): Date {
-        return new Date(a.getTime() - b.getTime());
-      }
       get comparator(): (a: Date, b: Date) => number {
         return (a, b) => a.getTime() - b.getTime();
       }
