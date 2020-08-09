@@ -2,7 +2,7 @@
   "name": "tree-range-set",
   "version": "1.0.0",
   "description": "A RangeSet implementation based on binary search trees",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
     "build": "tsc --build tsconfig.build.json",
@@ -21,7 +21,11 @@
     "set",
     "range set"
   ],
-  "author": "Roman Nazarenko <me@jtalk.me>",
+  "author": {
+    "name": "Roman Nazarenko",
+    "email": "me@jtalk.me",
+    "url": "https://jtalk.me"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Jtalk/tree-range-set/issues"
