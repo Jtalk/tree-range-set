@@ -131,11 +131,18 @@ nonNaturalRange.contains(<span class="hljs-number">1</span>); <span class="hljs-
 <span class="hljs-comment">// Instantiate the spec</span>
 <span class="hljs-keyword">const</span> spec = <span class="hljs-keyword">new</span> DateSpec();
 
-<span class="hljs-keyword">const</span> todayRange = Range.closeOpen(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-01T00:00:00Z&quot;</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-02T00:00:00Z&quot;</span>), spec);
+<span class="hljs-keyword">const</span> todayRange = Range.closeOpen(
+                    <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-01T00:00:00Z&quot;</span>), 
+                    <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-02T00:00:00Z&quot;</span>), 
+                    spec);
 <span class="hljs-keyword">const</span> workingDaysRange = RangeSet.of(spec)
-                                .add(todayRange)
-                                .add(Range.closeOpen(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-02T00:00:00Z&quot;</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-02T00:00:00Z&quot;</span>), spec))
-                                .add(Range.closeOpen(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-05T00:00:00Z&quot;</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-05T00:00:00Z&quot;</span>), spec));
+  .add(todayRange)
+  .add(Range.closeOpen(
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-02T00:00:00Z&quot;</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-02T00:00:00Z&quot;</span>), spec)
+  )
+  .add(Range.closeOpen(
+    <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-05T00:00:00Z&quot;</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-05T00:00:00Z&quot;</span>), spec)
+  );
 
 
 <span class="hljs-comment">// Now we can query them:</span>
