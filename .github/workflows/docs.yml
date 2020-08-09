@@ -30,8 +30,8 @@ jobs:
         mkdir -p docs
         mv -f ~/checkout-mv-temp/ ./
         git config --global user.name 'Github Actions Bot'
-        git add docs/
-        git commit -m 'Documentation updated for ${{ github.ref }} at ${{ github.ref_head }}'
+        git add .
+        git commit --allow-empty -m 'Documentation updated for ${{ github.ref }} at ${{ github.ref_head }}'
         git push
         
         
