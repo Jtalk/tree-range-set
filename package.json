@@ -1,6 +1,6 @@
 {
   "name": "tree-range-set",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A RangeSet implementation based on binary search trees",
   "main": "dist/index.js",
   "scripts": {
