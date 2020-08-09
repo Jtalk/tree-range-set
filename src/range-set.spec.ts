@@ -4,6 +4,15 @@ import { BintreeRangeSetTree } from "./range-set-tree-bintree";
 import { RangeSpec, AbstractRangeSpec } from "./range-spec";
 
 describe("RangeSet", () => {
+  describe("creating infinity", () => {
+    expect(() => Range.singleton(Infinity)).toThrow(/infinity/);
+    expect(() => Range.singleton(-Infinity)).toThrow(/infinity/);
+
+    expect(() => Range.close(Infinity, -Infinity)).toThrow(/greater than or equal to/);
+    expect(() => Range.open(Infinity, -Infinity)).toThrow(/greater than or equal to/);
+    expect(() => Range.openClose(-10, -Infinity)).toThrow(/greater than or equal to/);
+    expect(() => Range.closeOpen(Infinity, 50)).toThrow(/greater than or equal to/);
+  });
   describe("empty", () => {
     it("should produce empty set of ranges", () => {
       expect(RangeSet.numeric().isEmpty).toBe(true);
@@ -77,6 +86,54 @@ describe("RangeSet", () => {
       const self = instance.add(other);
       expect(self).toBe(instance);
       expect(instance.subranges).toEqual(expected);
+    });
+    describe("infinity cases", () => {
+      it("infinite on both ends stays unchanged", () => {
+        const instance = RangeSet.numeric();
+        const infinity = Range.open(-Infinity, Infinity);
+
+        instance.add(infinity);
+        expect(instance.subranges).toEqual([infinity]);
+
+        instance.add(Range.close(-10, 10));
+        expect(instance.subranges).toEqual([infinity]);
+
+        instance.add(Range.closeOpen(-Infinity, 50));
+        expect(instance.subranges).toEqual([infinity]);
+
+        instance.add(Range.openClose(50, Infinity));
+        expect(instance.subranges).toEqual([infinity]);
+      });
+      it("right-infinite grows left", () => {
+        const instance = RangeSet.numeric();
+
+        instance.add(Range.open(0, Infinity));
+        expect(instance.subranges).toEqual([Range.open(0, Infinity)]);
+
+        instance.add(Range.close(-10, 10));
+        expect(instance.subranges).toEqual([Range.closeOpen(-10, Infinity)]);
+
+        instance.add(Range.closeOpen(0, Infinity));
+        expect(instance.subranges).toEqual([Range.closeOpen(-10, Infinity)]);
+
+        instance.add(Range.open(-Infinity, Infinity));
+        expect(instance.subranges).toEqual([Range.open(-Infinity, Infinity)]);
+      });
+      it("left-infinite grows right", () => {
+        const instance = RangeSet.numeric();
+
+        instance.add(Range.open(-Infinity, 0));
+        expect(instance.subranges).toEqual([Range.open(-Infinity, 0)]);
+
+        instance.add(Range.close(-10, 10));
+        expect(instance.subranges).toEqual([Range.openClose(-Infinity, 10)]);
+
+        instance.add(Range.closeOpen(-Infinity, 0));
+        expect(instance.subranges).toEqual([Range.openClose(-Infinity, 10)]);
+
+        instance.add(Range.open(-Infinity, Infinity));
+        expect(instance.subranges).toEqual([Range.open(-Infinity, Infinity)]);
+      });
     });
   });
   describe("subtract", () => {
@@ -177,6 +234,24 @@ describe("RangeSet", () => {
       const expected = [Range.singleton(20), Range.open(50, 51), Range.singleton(60)];
       expect(instance.subranges).toEqual(expected);
     });
+    describe("infinity cases", () => {
+      it("infinity subtracts infinity", () => {
+        const instance = RangeSet.numeric().add(Range.open(-Infinity, Infinity));
+        expect(instance.subtract(Range.open(-Infinity, Infinity)).subranges).toEqual([]);
+      });
+      it("infinity subtracts right", () => {
+        const instance = RangeSet.numeric().add(Range.open(-Infinity, Infinity));
+        expect(instance.subtract(Range.open(-Infinity, 0)).subranges).toEqual([
+          Range.closeOpen(0, Infinity),
+        ]);
+      });
+      it("infinity subtracts left", () => {
+        const instance = RangeSet.numeric().add(Range.open(-Infinity, Infinity));
+        expect(instance.subtract(Range.open(0, Infinity)).subranges).toEqual([
+          Range.openClose(-Infinity, 0),
+        ]);
+      });
+    });
   });
   describe("contains", () => {
     it("empty range contains nothing but an empty range", () => {
@@ -248,6 +323,32 @@ describe("RangeSet", () => {
       expect(instance.contains(9)).toBe(false);
       expect(instance.contains(11)).toBe(false);
       expect(instance.contains(Range.singleton(10))).toBe(true);
+    });
+    it("infinity cases", () => {
+      expect(
+        RangeSet.numeric()
+          .add(Range.open(-Infinity, Infinity))
+          .contains(Range.close(-Infinity, Infinity))
+      ).toBe(true);
+      expect(
+        RangeSet.numeric().add(Range.open(-Infinity, Infinity)).contains(Range.close(-10, 10))
+      ).toBe(true);
+      expect(
+        RangeSet.numeric().add(Range.open(-Infinity, 0)).contains(Range.close(-Infinity, -1))
+      ).toBe(true);
+      expect(
+        RangeSet.numeric().add(Range.open(0, Infinity)).contains(Range.close(1, Infinity))
+      ).toBe(true);
+
+      expect(RangeSet.numeric().add(Range.open(-Infinity, Infinity)).contains(0)).toBe(true);
+      expect(RangeSet.numeric().add(Range.open(-Infinity, Infinity)).contains(Infinity)).toBe(
+        false
+      );
+      expect(RangeSet.numeric().add(Range.open(-Infinity, Infinity)).contains(-Infinity)).toBe(
+        false
+      );
+      expect(RangeSet.numeric().add(Range.openClose(-Infinity, 0)).contains(0)).toBe(true);
+      expect(RangeSet.numeric().add(Range.close(0, Infinity)).contains(0)).toBe(true);
     });
   });
   describe("containing", () => {
@@ -332,7 +433,7 @@ describe("RangeSet", () => {
       expect(instance.enclosing(Range.closeOpen(150, 155))).toBeUndefined();
     });
   });
-  describe("BTree-based implementation", () => {
+  describe("BinTree-based implementation", () => {
     const instance = RangeSet.numeric(BintreeRangeSetTree);
     instance.add(Range.closeOpen(30, 40));
     instance.add(Range.openClose(10, 20));

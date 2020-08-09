@@ -168,11 +168,15 @@ describe("Range", () => {
       }
     );
     it.each`
-      range1                     | range2
-      ${Range.openClose(10, 20)} | ${Range.openClose(9, 10)}
-      ${Range.openClose(10, 20)} | ${Range.openClose(20, 21)}
-      ${Range.openClose(10, 20)} | ${Range.openClose(30, 40)}
-      ${Range.openClose(10, 20)} | ${Range.openClose(0, 5)}
+      range1                           | range2
+      ${Range.openClose(10, 20)}       | ${Range.openClose(9, 10)}
+      ${Range.openClose(10, 20)}       | ${Range.openClose(20, 21)}
+      ${Range.openClose(10, 20)}       | ${Range.openClose(30, 40)}
+      ${Range.openClose(10, 20)}       | ${Range.openClose(0, 5)}
+      ${Range.openClose(-Infinity, 0)} | ${Range.openClose(-10, 1)}
+      ${Range.openClose(-Infinity, 0)} | ${Range.openClose(-Infinity, 1)}
+      ${Range.openClose(0, Infinity)}  | ${Range.openClose(-1, 10)}
+      ${Range.openClose(0, Infinity)}  | ${Range.openClose(-1, Infinity)}
     `(
       "$range1 does not contain $range2",
       ({ range1, range2 }: { range1: Range<number>; range2: Range<number> }) => {
@@ -371,81 +375,84 @@ describe("Range", () => {
   });
   describe("subtract", () => {
     it.each`
-      range1                     | range2                     | expected
-      ${Range.empty()}           | ${Range.empty()}           | ${[Range.empty()]}
-      ${Range.openClose(10, 20)} | ${Range.empty()}           | ${[Range.openClose(10, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.open(20, 30)}      | ${[Range.openClose(10, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.open(20, 30)}      | ${[Range.closeOpen(10, 20)]}
-      ${Range.open(10, 20)}      | ${Range.open(20, 30)}      | ${[Range.open(10, 20)]}
-      ${Range.close(10, 20)}     | ${Range.open(20, 30)}      | ${[Range.close(10, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.openClose(20, 30)} | ${[Range.openClose(10, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.openClose(20, 30)} | ${[Range.closeOpen(10, 20)]}
-      ${Range.open(10, 20)}      | ${Range.openClose(20, 30)} | ${[Range.open(10, 20)]}
-      ${Range.close(10, 20)}     | ${Range.openClose(20, 30)} | ${[Range.close(10, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.close(20, 30)}     | ${[Range.open(10, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.close(20, 30)}     | ${[Range.closeOpen(10, 20)]}
-      ${Range.open(10, 20)}      | ${Range.close(20, 30)}     | ${[Range.open(10, 20)]}
-      ${Range.close(10, 20)}     | ${Range.close(20, 30)}     | ${[Range.closeOpen(10, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.closeOpen(20, 30)} | ${[Range.open(10, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.closeOpen(20, 30)} | ${[Range.closeOpen(10, 20)]}
-      ${Range.open(10, 20)}      | ${Range.closeOpen(20, 30)} | ${[Range.open(10, 20)]}
-      ${Range.close(10, 20)}     | ${Range.closeOpen(20, 30)} | ${[Range.closeOpen(10, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.open(1, 10)}       | ${[Range.openClose(10, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.open(1, 10)}       | ${[Range.closeOpen(10, 20)]}
-      ${Range.open(10, 20)}      | ${Range.open(1, 10)}       | ${[Range.open(10, 20)]}
-      ${Range.close(10, 20)}     | ${Range.open(1, 10)}       | ${[Range.close(10, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.openClose(1, 10)}  | ${[Range.openClose(10, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.openClose(1, 10)}  | ${[Range.open(10, 20)]}
-      ${Range.open(10, 20)}      | ${Range.openClose(1, 10)}  | ${[Range.open(10, 20)]}
-      ${Range.close(10, 20)}     | ${Range.openClose(1, 10)}  | ${[Range.openClose(10, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.close(1, 10)}      | ${[Range.openClose(10, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.close(1, 10)}      | ${[Range.open(10, 20)]}
-      ${Range.open(10, 20)}      | ${Range.close(1, 10)}      | ${[Range.open(10, 20)]}
-      ${Range.close(10, 20)}     | ${Range.close(1, 10)}      | ${[Range.openClose(10, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.closeOpen(1, 10)}  | ${[Range.openClose(10, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.closeOpen(1, 10)}  | ${[Range.closeOpen(10, 20)]}
-      ${Range.open(10, 20)}      | ${Range.closeOpen(1, 10)}  | ${[Range.open(10, 20)]}
-      ${Range.close(10, 20)}     | ${Range.closeOpen(1, 10)}  | ${[Range.close(10, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.open(14, 16)}      | ${[Range.openClose(10, 14), Range.close(16, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.open(14, 16)}      | ${[Range.close(10, 14), Range.closeOpen(16, 20)]}
-      ${Range.open(10, 20)}      | ${Range.open(14, 16)}      | ${[Range.openClose(10, 14), Range.closeOpen(16, 20)]}
-      ${Range.close(10, 20)}     | ${Range.open(14, 16)}      | ${[Range.close(10, 14), Range.close(16, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.openClose(14, 16)} | ${[Range.openClose(10, 14), Range.openClose(16, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.openClose(14, 16)} | ${[Range.close(10, 14), Range.open(16, 20)]}
-      ${Range.open(10, 20)}      | ${Range.openClose(14, 16)} | ${[Range.openClose(10, 14), Range.open(16, 20)]}
-      ${Range.close(10, 20)}     | ${Range.openClose(14, 16)} | ${[Range.close(10, 14), Range.openClose(16, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.close(14, 16)}     | ${[Range.open(10, 14), Range.openClose(16, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.close(14, 16)}     | ${[Range.closeOpen(10, 14), Range.open(16, 20)]}
-      ${Range.open(10, 20)}      | ${Range.close(14, 16)}     | ${[Range.open(10, 14), Range.open(16, 20)]}
-      ${Range.close(10, 20)}     | ${Range.close(14, 16)}     | ${[Range.closeOpen(10, 14), Range.openClose(16, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.closeOpen(14, 16)} | ${[Range.open(10, 14), Range.close(16, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.closeOpen(14, 16)} | ${[Range.closeOpen(10, 14), Range.closeOpen(16, 20)]}
-      ${Range.open(10, 20)}      | ${Range.closeOpen(14, 16)} | ${[Range.open(10, 14), Range.closeOpen(16, 20)]}
-      ${Range.close(10, 20)}     | ${Range.closeOpen(14, 16)} | ${[Range.closeOpen(10, 14), Range.close(16, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.open(10, 16)}      | ${[Range.close(16, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.open(10, 16)}      | ${[Range.singleton(10), Range.closeOpen(16, 20)]}
-      ${Range.open(10, 20)}      | ${Range.open(10, 16)}      | ${[Range.closeOpen(16, 20)]}
-      ${Range.close(10, 20)}     | ${Range.open(10, 16)}      | ${[Range.singleton(10), Range.close(16, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.openClose(10, 16)} | ${[Range.openClose(16, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.openClose(10, 16)} | ${[Range.singleton(10), Range.open(16, 20)]}
-      ${Range.open(10, 20)}      | ${Range.openClose(10, 16)} | ${[Range.open(16, 20)]}
-      ${Range.close(10, 20)}     | ${Range.openClose(10, 16)} | ${[Range.singleton(10), Range.openClose(16, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.close(10, 16)}     | ${[Range.open(16, 20)]}
-      ${Range.close(10, 20)}     | ${Range.close(10, 16)}     | ${[Range.openClose(16, 20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.closeOpen(10, 16)} | ${[Range.closeOpen(16, 20)]}
-      ${Range.close(10, 20)}     | ${Range.closeOpen(10, 16)} | ${[Range.close(16, 20)]}
-      ${Range.openClose(10, 20)} | ${Range.open(14, 20)}      | ${[Range.openClose(10, 14), Range.singleton(20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.open(14, 20)}      | ${[Range.close(10, 14)]}
-      ${Range.open(10, 20)}      | ${Range.open(14, 20)}      | ${[Range.openClose(10, 14)]}
-      ${Range.close(10, 20)}     | ${Range.open(14, 20)}      | ${[Range.close(10, 14), Range.singleton(20)]}
-      ${Range.openClose(10, 20)} | ${Range.openClose(14, 20)} | ${[Range.openClose(10, 14)]}
-      ${Range.close(10, 20)}     | ${Range.openClose(14, 20)} | ${[Range.close(10, 14)]}
-      ${Range.openClose(10, 20)} | ${Range.close(14, 20)}     | ${[Range.open(10, 14)]}
-      ${Range.close(10, 20)}     | ${Range.close(14, 20)}     | ${[Range.closeOpen(10, 14)]}
-      ${Range.openClose(10, 20)} | ${Range.closeOpen(14, 20)} | ${[Range.open(10, 14), Range.singleton(20)]}
-      ${Range.closeOpen(10, 20)} | ${Range.closeOpen(14, 20)} | ${[Range.closeOpen(10, 14)]}
-      ${Range.open(10, 20)}      | ${Range.closeOpen(14, 20)} | ${[Range.open(10, 14)]}
-      ${Range.close(10, 20)}     | ${Range.closeOpen(14, 20)} | ${[Range.closeOpen(10, 14), Range.singleton(20)]}
+      range1                             | range2                        | expected
+      ${Range.empty()}                   | ${Range.empty()}              | ${[Range.empty()]}
+      ${Range.openClose(10, 20)}         | ${Range.empty()}              | ${[Range.openClose(10, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.open(20, 30)}         | ${[Range.openClose(10, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.open(20, 30)}         | ${[Range.closeOpen(10, 20)]}
+      ${Range.open(10, 20)}              | ${Range.open(20, 30)}         | ${[Range.open(10, 20)]}
+      ${Range.close(10, 20)}             | ${Range.open(20, 30)}         | ${[Range.close(10, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.openClose(20, 30)}    | ${[Range.openClose(10, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.openClose(20, 30)}    | ${[Range.closeOpen(10, 20)]}
+      ${Range.open(10, 20)}              | ${Range.openClose(20, 30)}    | ${[Range.open(10, 20)]}
+      ${Range.close(10, 20)}             | ${Range.openClose(20, 30)}    | ${[Range.close(10, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.close(20, 30)}        | ${[Range.open(10, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.close(20, 30)}        | ${[Range.closeOpen(10, 20)]}
+      ${Range.open(10, 20)}              | ${Range.close(20, 30)}        | ${[Range.open(10, 20)]}
+      ${Range.close(10, 20)}             | ${Range.close(20, 30)}        | ${[Range.closeOpen(10, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.closeOpen(20, 30)}    | ${[Range.open(10, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.closeOpen(20, 30)}    | ${[Range.closeOpen(10, 20)]}
+      ${Range.open(10, 20)}              | ${Range.closeOpen(20, 30)}    | ${[Range.open(10, 20)]}
+      ${Range.close(10, 20)}             | ${Range.closeOpen(20, 30)}    | ${[Range.closeOpen(10, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.open(1, 10)}          | ${[Range.openClose(10, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.open(1, 10)}          | ${[Range.closeOpen(10, 20)]}
+      ${Range.open(10, 20)}              | ${Range.open(1, 10)}          | ${[Range.open(10, 20)]}
+      ${Range.close(10, 20)}             | ${Range.open(1, 10)}          | ${[Range.close(10, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.openClose(1, 10)}     | ${[Range.openClose(10, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.openClose(1, 10)}     | ${[Range.open(10, 20)]}
+      ${Range.open(10, 20)}              | ${Range.openClose(1, 10)}     | ${[Range.open(10, 20)]}
+      ${Range.close(10, 20)}             | ${Range.openClose(1, 10)}     | ${[Range.openClose(10, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.close(1, 10)}         | ${[Range.openClose(10, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.close(1, 10)}         | ${[Range.open(10, 20)]}
+      ${Range.open(10, 20)}              | ${Range.close(1, 10)}         | ${[Range.open(10, 20)]}
+      ${Range.close(10, 20)}             | ${Range.close(1, 10)}         | ${[Range.openClose(10, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.closeOpen(1, 10)}     | ${[Range.openClose(10, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.closeOpen(1, 10)}     | ${[Range.closeOpen(10, 20)]}
+      ${Range.open(10, 20)}              | ${Range.closeOpen(1, 10)}     | ${[Range.open(10, 20)]}
+      ${Range.close(10, 20)}             | ${Range.closeOpen(1, 10)}     | ${[Range.close(10, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.open(14, 16)}         | ${[Range.openClose(10, 14), Range.close(16, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.open(14, 16)}         | ${[Range.close(10, 14), Range.closeOpen(16, 20)]}
+      ${Range.open(10, 20)}              | ${Range.open(14, 16)}         | ${[Range.openClose(10, 14), Range.closeOpen(16, 20)]}
+      ${Range.close(10, 20)}             | ${Range.open(14, 16)}         | ${[Range.close(10, 14), Range.close(16, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.openClose(14, 16)}    | ${[Range.openClose(10, 14), Range.openClose(16, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.openClose(14, 16)}    | ${[Range.close(10, 14), Range.open(16, 20)]}
+      ${Range.open(10, 20)}              | ${Range.openClose(14, 16)}    | ${[Range.openClose(10, 14), Range.open(16, 20)]}
+      ${Range.close(10, 20)}             | ${Range.openClose(14, 16)}    | ${[Range.close(10, 14), Range.openClose(16, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.close(14, 16)}        | ${[Range.open(10, 14), Range.openClose(16, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.close(14, 16)}        | ${[Range.closeOpen(10, 14), Range.open(16, 20)]}
+      ${Range.open(10, 20)}              | ${Range.close(14, 16)}        | ${[Range.open(10, 14), Range.open(16, 20)]}
+      ${Range.close(10, 20)}             | ${Range.close(14, 16)}        | ${[Range.closeOpen(10, 14), Range.openClose(16, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.closeOpen(14, 16)}    | ${[Range.open(10, 14), Range.close(16, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.closeOpen(14, 16)}    | ${[Range.closeOpen(10, 14), Range.closeOpen(16, 20)]}
+      ${Range.open(10, 20)}              | ${Range.closeOpen(14, 16)}    | ${[Range.open(10, 14), Range.closeOpen(16, 20)]}
+      ${Range.close(10, 20)}             | ${Range.closeOpen(14, 16)}    | ${[Range.closeOpen(10, 14), Range.close(16, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.open(10, 16)}         | ${[Range.close(16, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.open(10, 16)}         | ${[Range.singleton(10), Range.closeOpen(16, 20)]}
+      ${Range.open(10, 20)}              | ${Range.open(10, 16)}         | ${[Range.closeOpen(16, 20)]}
+      ${Range.close(10, 20)}             | ${Range.open(10, 16)}         | ${[Range.singleton(10), Range.close(16, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.openClose(10, 16)}    | ${[Range.openClose(16, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.openClose(10, 16)}    | ${[Range.singleton(10), Range.open(16, 20)]}
+      ${Range.open(10, 20)}              | ${Range.openClose(10, 16)}    | ${[Range.open(16, 20)]}
+      ${Range.close(10, 20)}             | ${Range.openClose(10, 16)}    | ${[Range.singleton(10), Range.openClose(16, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.close(10, 16)}        | ${[Range.open(16, 20)]}
+      ${Range.close(10, 20)}             | ${Range.close(10, 16)}        | ${[Range.openClose(16, 20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.closeOpen(10, 16)}    | ${[Range.closeOpen(16, 20)]}
+      ${Range.close(10, 20)}             | ${Range.closeOpen(10, 16)}    | ${[Range.close(16, 20)]}
+      ${Range.openClose(10, 20)}         | ${Range.open(14, 20)}         | ${[Range.openClose(10, 14), Range.singleton(20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.open(14, 20)}         | ${[Range.close(10, 14)]}
+      ${Range.open(10, 20)}              | ${Range.open(14, 20)}         | ${[Range.openClose(10, 14)]}
+      ${Range.close(10, 20)}             | ${Range.open(14, 20)}         | ${[Range.close(10, 14), Range.singleton(20)]}
+      ${Range.openClose(10, 20)}         | ${Range.openClose(14, 20)}    | ${[Range.openClose(10, 14)]}
+      ${Range.close(10, 20)}             | ${Range.openClose(14, 20)}    | ${[Range.close(10, 14)]}
+      ${Range.openClose(10, 20)}         | ${Range.close(14, 20)}        | ${[Range.open(10, 14)]}
+      ${Range.close(10, 20)}             | ${Range.close(14, 20)}        | ${[Range.closeOpen(10, 14)]}
+      ${Range.openClose(10, 20)}         | ${Range.closeOpen(14, 20)}    | ${[Range.open(10, 14), Range.singleton(20)]}
+      ${Range.closeOpen(10, 20)}         | ${Range.closeOpen(14, 20)}    | ${[Range.closeOpen(10, 14)]}
+      ${Range.open(10, 20)}              | ${Range.closeOpen(14, 20)}    | ${[Range.open(10, 14)]}
+      ${Range.close(10, 20)}             | ${Range.closeOpen(14, 20)}    | ${[Range.closeOpen(10, 14), Range.singleton(20)]}
+      ${Range.open(-Infinity, Infinity)} | ${Range.close(-10, 10)}       | ${[Range.open(-Infinity, -10), Range.open(10, Infinity)]}
+      ${Range.open(-Infinity, Infinity)} | ${Range.close(-10, Infinity)} | ${[Range.open(-Infinity, -10)]}
+      ${Range.open(-Infinity, Infinity)} | ${Range.close(-Infinity, 10)} | ${[Range.open(10, Infinity)]}
     `("$range1 - $range2 = $result", ({ range1, range2, expected }) => {
       const result = range1.subtract(range2);
       expect(result).toEqual(expected);
