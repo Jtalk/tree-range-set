@@ -28,7 +28,7 @@ jobs:
         git fetch origin documentation
         git checkout documentation
         mkdir -p docs
-        mv -f ~/checkout-mv-temp/ ./
+        mv -f ~/checkout-mv-temp/* ./
         git config --global user.name 'Github Actions Bot'
         git add .
         git commit --allow-empty -m 'Documentation updated for ${{ github.ref }} at ${{ github.ref_head }}'
