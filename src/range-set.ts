@@ -116,7 +116,7 @@ export class RangeSet<T> {
       }
     }
     toDelete.forEach((r) => this.tree.remove(r));
-    this.tree.insert(newRange);
+    if (!newRange.isEmpty) this.tree.insert(newRange);
     return this;
   }
 
@@ -166,7 +166,7 @@ export class RangeSet<T> {
       item.subtract(other).forEach((r) => toAdd.push(r));
     }
     toDelete.forEach((r) => this.tree.remove(r));
-    toAdd.forEach((r) => this.tree.insert(r));
+    toAdd.filter((r) => !r.isEmpty).forEach((r) => this.tree.insert(r));
     return this;
   }
 
