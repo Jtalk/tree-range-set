@@ -1,6 +1,13 @@
+/**
+ * These are adapter tree implementations from the `bintrees` package.
+ * @packageDocumentation
+ */
 import { RBTree, Iterator, BinTree } from "bintrees";
 import { RangeSetTree, Comparator, TreeIterator } from "./range-set-tree";
 
+/**
+ * A red-black underlying tree for [[`RangeSet`]].
+ */
 export class BintreeRBRangeSetTree<T> implements RangeSetTree<T> {
   private readonly tree: RBTree<T>;
   constructor(comparator: Comparator<T>) {
@@ -33,6 +40,9 @@ export class BintreeRBRangeSetTree<T> implements RangeSetTree<T> {
   }
 }
 
+/**
+ * A regular underlying binary search tree for [[`RangeSet`]].
+ */
 export class BintreeRangeSetTree<T> implements RangeSetTree<T> {
   private readonly tree: BinTree<T>;
   constructor(comparator: Comparator<T>) {
@@ -65,6 +75,9 @@ export class BintreeRangeSetTree<T> implements RangeSetTree<T> {
   }
 }
 
+/**
+ * A universal `bintrees` iterator, compatible with both of the adapters.
+ */
 class BintreeIterator<T> implements TreeIterator<T> {
   constructor(private readonly orig: Iterator<T>) {}
   prev(): T | null {
@@ -76,3 +89,4 @@ class BintreeIterator<T> implements TreeIterator<T> {
 }
 
 exports.BintreeRBRangeSetTree = BintreeRBRangeSetTree;
+exports.BintreeRangeSetTree = BintreeRangeSetTree;

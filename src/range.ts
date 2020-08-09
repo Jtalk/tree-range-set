@@ -24,13 +24,17 @@ import { RangeSpec, NumberSpec } from "./range-spec";
  *                                                 new MyTypeRangeSpec());
  * ```
  *
- * This class is fully immutable.
+ * This class is fully **immutable**.
  *
  * @typeParam T the target type stored by this range.
  *              A custom `spec` is required unless it's coercible to `number`.
  *
  * Extra care is required around handling empty ranges,
  * since they may have their bounds set to `null` if created with [[`Range.empty`]].
+ *
+ * Note: since it's not possible to make an infinite bound inclusive,
+ * relevant constructor methods override the requested bound type for values that
+ * conform to [[`RangeSpec.isInfinity`]].
  */
 export class Range<T> {
   /**
@@ -55,7 +59,7 @@ export class Range<T> {
   static open<T>(from: T, to: T, spec?: RangeSpec<T>): Range<T> {
     spec = spec || (new NumberSpec() as any);
     if (!spec.isGreaterOrEqualTo(to, from))
-      throw Error("Upper bound must be greater than equal to the lower");
+      throw Error("Upper bound must be greater than or equal to the lower");
     return new Range<T>(spec, from, to, false, false);
   }
 
@@ -71,6 +75,9 @@ export class Range<T> {
    * Range.close(10, 10).isEqual(Range.singleton(10)); // -> true
    * ```
    *
+   * Bounds are forcibly overriden to *open* for infinity bounds, i.e.
+   * bound values that conform to [[`RangeSpec.isInfinity`]].
+   *
    * @typeParam T the target type to b represented by the resulting range.
    *              A custom `spec` is required unless it's coercible to `number`.
    *
@@ -81,7 +88,7 @@ export class Range<T> {
   static close<T>(from: T, to: T, spec?: RangeSpec<T>): Range<T> {
     spec = spec || (new NumberSpec() as any);
     if (!spec.isGreaterOrEqualTo(to, from))
-      throw Error("Upper bound must be greater than equal to the lower");
+      throw Error("Upper bound must be greater than or equal to the lower");
     return new Range<T>(spec, from, to, !spec.isInfinity(from), !spec.isInfinity(to));
   }
 
@@ -97,6 +104,9 @@ export class Range<T> {
    * const instance: Range<number> = Range.openClose(10, 10); // {}, an empty range
    * ```
    *
+   * Bounds are forcibly overriden to *open* for infinity bounds, i.e.
+   * bound values that conform to [[`RangeSpec.isInfinity`]].
+   *
    * @typeParam T the target type to b represented by the resulting range.
    *              A custom `spec` is required unless it's coercible to `number`.
    *
@@ -107,7 +117,7 @@ export class Range<T> {
   static openClose<T>(from: T, to: T, spec?: RangeSpec<T>): Range<T> {
     spec = spec || (new NumberSpec() as any);
     if (!spec.isGreaterOrEqualTo(to, from))
-      throw Error("Upper bound must be greater than equal to the lower");
+      throw Error("Upper bound must be greater than or equal to the lower");
     return new Range<T>(spec, from, to, false, !spec.isInfinity(to));
   }
 
@@ -123,6 +133,9 @@ export class Range<T> {
    * const instance: Range<number> = Range.closeOpen(10, 10); // {}, an empty range
    * ```
    *
+   * Bounds are forcibly overriden to *open* for infinity bounds, i.e.
+   * bound values that conform to [[`RangeSpec.isInfinity`]].
+   *
    * @typeParam T the target type to b represented by the resulting range.
    *              A custom `spec` is required unless it's coercible to `number`.
    *
@@ -133,7 +146,7 @@ export class Range<T> {
   static closeOpen<T>(from: T, to: T, spec?: RangeSpec<T>): Range<T> {
     spec = spec || (new NumberSpec() as any);
     if (!spec.isGreaterOrEqualTo(to, from))
-      throw Error("Upper bound must be greater than equal to the lower");
+      throw Error("Upper bound must be greater than or equal to the lower");
     return new Range<T>(spec, from, to, !spec.isInfinity(from), false);
   }
 
@@ -144,13 +157,19 @@ export class Range<T> {
    * const instance: Range<number> = Range.singleton(5); // [5; 5]
    * ```
    *
+   * Note: a singleton instance cannot be created out of a [[`RangeSpec.infinity`]] value,
+   * since infinity cannot be enclosed in an interval.
+   *
    * @typeParam T the target type to b represented by the resulting range.
    *              A custom `spec` is required unless it's coercible to `number`.
    *
    * @param value The value the resulting range will include.
    * @param spec Optional. See [[`RangeSpec`]].
+   * @throws Error if the supplied value conforms to [[`RangeSpec.isInfinity`]].
    */
   static singleton<T>(value: T, spec?: RangeSpec<T>): Range<T> {
+    spec = spec || (new NumberSpec() as any);
+    if (spec.isInfinity(value)) throw Error(`Cannot create a singleton range out of infinity`);
     return Range.close(value, value, spec);
   }
 
