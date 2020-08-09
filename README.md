@@ -75,11 +75,18 @@ class DateSpec extends AbstractRangeSpec<Date> implements RangeSpec<Date> {
 // Instantiate the spec
 const spec = new DateSpec();
 
-const todayRange = Range.closeOpen(new Date("2020-07-01T00:00:00Z"), new Date("2020-07-02T00:00:00Z"), spec);
+const todayRange = Range.closeOpen(
+                    new Date("2020-07-01T00:00:00Z"), 
+                    new Date("2020-07-02T00:00:00Z"), 
+                    spec);
 const workingDaysRange = RangeSet.of(spec)
-                                .add(todayRange)
-                                .add(Range.closeOpen(new Date("2020-07-02T00:00:00Z"), new Date("2020-07-02T00:00:00Z"), spec))
-                                .add(Range.closeOpen(new Date("2020-07-05T00:00:00Z"), new Date("2020-07-05T00:00:00Z"), spec));
+  .add(todayRange)
+  .add(Range.closeOpen(
+    new Date("2020-07-02T00:00:00Z"), new Date("2020-07-02T00:00:00Z"), spec)
+  )
+  .add(Range.closeOpen(
+    new Date("2020-07-05T00:00:00Z"), new Date("2020-07-05T00:00:00Z"), spec)
+  );
 
 
 // Now we can query them:
