@@ -1,0 +1,7 @@
+.idea
+.github
+src
+.gitignore
+.prettier*
+jest*.js
+*.json
