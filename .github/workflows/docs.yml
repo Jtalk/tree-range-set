@@ -29,6 +29,7 @@ jobs:
         git checkout documentation
         rm -rf docs README.md
         mv -f ~/checkout-mv-temp/* ./
+        touch docs/.nojekyll
         git config --global user.name 'Github Actions Bot'
         git add .
         git commit --allow-empty -m 'Documentation updated for ${{ github.ref }} at ${{ github.ref_head }}'
