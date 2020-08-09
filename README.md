@@ -1,5 +1,7 @@
 # Tree RangeSet
 
+![build](https://github.com/Jtalk/tree-range-set/workflows/build/badge.svg)
+
 A [Range](https://jtalk.github.io/tree-range-set/classes/_range_.range.html) and 
 [RangeSet](https://jtalk.github.io/tree-range-set/classes/_range_set_.rangeset.html) 
 implementation based on search trees. 
