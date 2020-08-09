@@ -24,10 +24,11 @@ jobs:
       run: |
         mkdir ~/checkout-mv-temp
         mv docs/ ~/checkout-mv-temp
+        cp README.md ~/checkout-mv-temp
         git fetch origin documentation
         git checkout documentation
         mkdir -p docs
-        mv -f ~/checkout-mv-temp/docs/ docs/
+        mv -f ~/checkout-mv-temp/ ./
         git config --global user.name 'Github Actions Bot'
         git add docs/
         git commit -m 'Documentation updated for ${{ github.ref }} at ${{ github.ref_head }}'
