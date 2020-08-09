@@ -3,6 +3,7 @@
   "typedocOptions": {
     "out": "docs",
     "mode": "modules",
+    "readme": "README.md",
     "excludeNotExported": true,
     "excludePrivate": true
   },
