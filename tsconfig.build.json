@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "typedocOptions": {
-    "out": "doc",
+    "out": "docs",
     "mode": "modules",
     "excludeNotExported": true,
     "excludePrivate": true
