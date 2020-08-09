@@ -27,7 +27,7 @@ jobs:
         cp README.md ~/checkout-mv-temp
         git fetch origin documentation
         git checkout documentation
-        mkdir -p docs
+        rm -rf docs README.md
         mv -f ~/checkout-mv-temp/* ./
         git config --global user.name 'Github Actions Bot'
         git add .
