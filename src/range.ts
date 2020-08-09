@@ -235,6 +235,7 @@ export class Range<T> {
    * Tells whether this is an empty range, i.e. the one including no elements.
    */
   get isEmpty(): boolean {
+    if (this.lower === null && this.upper === null) return true; // Range.empty case
     return (
       this.spec.isEqual(this.lower, this.upper) && (!this.isLowerEnclosed || !this.isUpperEnclosed)
     );
