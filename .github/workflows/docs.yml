@@ -1,0 +1,35 @@
+name: build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: Install dependencies
+      run: npm ci
+    - name: Generate documentation
+      run: npm run doc
+    - name: Push documentation
+      if: github.ref == 'refs/heads/master'
+      run: |
+        mkdir ~/checkout-mv-temp
+        mv docs/ ~/checkout-mv-temp
+        git checkout documentation
+        mkdir -p docs
+        mv -f ~/checkout-mv-temp/docs/ docs/
+        git add docs/
+        git commit -m 'Documentation updated for ${{ github.ref }} at ${{ github.ref_head }}'
+        git push
+        
+        
+      
