@@ -24,6 +24,7 @@ jobs:
       run: |
         mkdir ~/checkout-mv-temp
         mv docs/ ~/checkout-mv-temp
+        git fetch origin documentation
         git checkout documentation
         mkdir -p docs
         mv -f ~/checkout-mv-temp/docs/ docs/
