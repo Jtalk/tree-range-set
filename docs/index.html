@@ -113,15 +113,15 @@ rationalRange.contains(naturalRange); <span class="hljs-comment">// yes!</span>
 
 <span class="hljs-comment">// What if we only want non-natural numbers?</span>
 <span class="hljs-keyword">const</span> nonNaturalRange = rationalRange.subtract(naturalRange);
-nonNaturalRange.contains(<span class="hljs-number">-1</span>); <span class="hljs-comment">// yes</span>
+nonNaturalRange.contains(-<span class="hljs-number">1</span>); <span class="hljs-comment">// yes</span>
 nonNaturalRange.contains(<span class="hljs-number">1</span>); <span class="hljs-comment">// no, 1 is a natural number</span></code></pre>
 				<a href="#using-a-custom-value-type-for-the-range" id="using-a-custom-value-type-for-the-range" style="color: inherit; text-decoration: none;">
 					<h3>Using a custom value type for the range</h3>
 				</a>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { RangeSet, Range, AbstractRangeSpec, RangeSpec } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;tree-range-set&quot;</span>;
 
-<span class="hljs-keyword">class</span> DateSpec <span class="hljs-keyword">extends</span> AbstractRangeSpec&lt;<span class="hljs-built_in">Date</span>&gt; <span class="hljs-keyword">implements</span> RangeSpec&lt;<span class="hljs-built_in">Date</span>&gt; {
-  get comparator(): <span class="hljs-function">(<span class="hljs-params">a: <span class="hljs-built_in">Date</span>, b: <span class="hljs-built_in">Date</span></span>) =&gt;</span> <span class="hljs-built_in">number</span> {
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DateSpec</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractRangeSpec</span>&lt;<span class="hljs-title">Date</span>&gt; <span class="hljs-title">implements</span> <span class="hljs-title">RangeSpec</span>&lt;<span class="hljs-title">Date</span>&gt; </span>{
+  <span class="hljs-keyword">get</span> <span class="hljs-title">comparator</span>(): (<span class="hljs-params">a: <span class="hljs-built_in">Date</span>, b: <span class="hljs-built_in">Date</span></span>) =&gt; <span class="hljs-title">number</span> {
     <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a.getTime() - b.getTime();
   }
   <span class="hljs-comment">// Infinity is optional, it provides special handling for closed ranges enclosed by infinity </span>
