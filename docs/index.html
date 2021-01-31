@@ -82,11 +82,13 @@
 				<a href="#npm" id="npm" style="color: inherit; text-decoration: none;">
 					<h4>NPM</h4>
 				</a>
-				<pre><code class="language-bash">npm i tree-range-set</code></pre>
+				<pre><code class="language-bash">npm i tree-range-set
+</code></pre>
 				<a href="#yarn" id="yarn" style="color: inherit; text-decoration: none;">
 					<h4>Yarn</h4>
 				</a>
-				<pre><code class="language-bash">yarn add tree-range-set</code></pre>
+				<pre><code class="language-bash">yarn add tree-range-set
+</code></pre>
 				<p>This library was built and tested with Node.js in mind, but there should be no reason for it not work in a modern browser.
 					That being said, handling large sets of ranges in a browser might be suboptimal, so you might want to look at
 				<a href="https://www.npmjs.com/package/drange">drange</a> for that instead.</p>
@@ -114,7 +116,8 @@ rationalRange.contains(naturalRange); <span class="hljs-comment">// yes!</span>
 <span class="hljs-comment">// What if we only want non-natural numbers?</span>
 <span class="hljs-keyword">const</span> nonNaturalRange = rationalRange.subtract(naturalRange);
 nonNaturalRange.contains(-<span class="hljs-number">1</span>); <span class="hljs-comment">// yes</span>
-nonNaturalRange.contains(<span class="hljs-number">1</span>); <span class="hljs-comment">// no, 1 is a natural number</span></code></pre>
+nonNaturalRange.contains(<span class="hljs-number">1</span>); <span class="hljs-comment">// no, 1 is a natural number</span>
+</code></pre>
 				<a href="#using-a-custom-value-type-for-the-range" id="using-a-custom-value-type-for-the-range" style="color: inherit; text-decoration: none;">
 					<h3>Using a custom value type for the range</h3>
 				</a>
@@ -157,7 +160,8 @@ canScheduleMeeting(
 ); <span class="hljs-comment">// yes</span>
 canScheduleMeeting(
   Range.closeOpen(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-04T12:00:00Z&quot;</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-04T13:00:00Z&quot;</span>), spec)
-); <span class="hljs-comment">// no, we don&#x27;t work on the 4th.</span></code></pre>
+); <span class="hljs-comment">// no, we don&#x27;t work on the 4th.</span>
+</code></pre>
 				<a href="#using-a-custom-tree-implementation" id="using-a-custom-tree-implementation" style="color: inherit; text-decoration: none;">
 					<h3>Using a custom tree implementation.</h3>
 				</a>
@@ -173,7 +177,9 @@ canScheduleMeeting(
 				to future suggestions on how to improve this benchmark. </p>
 				<pre><code><span class="hljs-attribute">drange</span> x <span class="hljs-number">14</span>.<span class="hljs-number">42</span> ops/sec ±<span class="hljs-number">2</span>.<span class="hljs-number">31</span>% (<span class="hljs-number">40</span> runs sampled)
 <span class="hljs-attribute">range</span>-set x <span class="hljs-number">1</span>.<span class="hljs-number">68</span> ops/sec ±<span class="hljs-number">17</span>.<span class="hljs-number">26</span>% (<span class="hljs-number">9</span> runs sampled)
-<span class="hljs-attribute">tree</span>-range-set x <span class="hljs-number">67</span>.<span class="hljs-number">37</span> ops/sec ±<span class="hljs-number">7</span>.<span class="hljs-number">37</span>% (<span class="hljs-number">58</span> runs sampled)</code></pre><p>The numbers represent adding and subtracting around 8,000 ranges in a single set, in separate installments of 8 (add 4, subtract 4).</p>
+<span class="hljs-attribute">tree</span>-range-set x <span class="hljs-number">67</span>.<span class="hljs-number">37</span> ops/sec ±<span class="hljs-number">7</span>.<span class="hljs-number">37</span>% (<span class="hljs-number">58</span> runs sampled)
+</code></pre>
+				<p>The numbers represent adding and subtracting around 8,000 ranges in a single set, in separate installments of 8 (add 4, subtract 4).</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
