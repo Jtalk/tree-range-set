@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for tree-range-set">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -51,13 +52,10 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">tree-range-set</a>
 				</li>
 				<li>
-					<a href="../modules/_range_spec_.html">&quot;range-spec&quot;</a>
-				</li>
-				<li>
-					<a href="_range_spec_.rangespec.html">RangeSpec</a>
+					<a href="rangespec.html">RangeSpec</a>
 				</li>
 			</ul>
 			<h1>Interface RangeSpec&lt;T&gt;</h1>
@@ -73,11 +71,11 @@
 						<p>An interface representing the knowledge required to create ranges
 						of arbitrary type <code>T</code>.</p>
 					</div>
-					<p>This interface is required to construct ranges over custom user-provided types. <a href="../classes/_range_.range.html"><code>Range</code></a> uses
-						<a href="../classes/_range_spec_.numberspec.html"><code>NumberSpec</code></a> by default, so there&#39;s no need to specify this spec for number-compatible types,
+					<p>This interface is required to construct ranges over custom user-provided types. <a href="../classes/range.html"><code>Range</code></a> uses
+						<a href="../classes/numberspec.html"><code>NumberSpec</code></a> by default, so there&#39;s no need to specify this spec for number-compatible types,
 					e.g. ones that have <code>valueOf(): number</code> implemented.</p>
-					<p>See <a href="../classes/_range_.range.html"><code>Range</code></a> and <a href="../classes/_range_set_.rangeset.html"><code>RangeSet</code></a> constructor methods for examples of how this spec is used.</p>
-					<p>It is recommended to extend <a href="../classes/_range_spec_.abstractrangespec.html"><code>AbstractRangeSpec</code></a> for user-defined ranges.</p>
+					<p>See <a href="../classes/range.html"><code>Range</code></a> and <a href="../classes/rangeset.html"><code>RangeSet</code></a> constructor methods for examples of how this spec is used.</p>
+					<p>It is recommended to extend <a href="../classes/abstractrangespec.html"><code>AbstractRangeSpec</code></a> for user-defined ranges.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -104,8 +102,7 @@
 			<section class="tsd-panel">
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../classes/_range_spec_.abstractrangespec.html" class="tsd-signature-type">AbstractRangeSpec</a></li>
-					<li><a href="../classes/_range_spec_.numberspec.html" class="tsd-signature-type">NumberSpec</a></li>
+					<li><a href="../classes/abstractrangespec.html" class="tsd-signature-type" data-tsd-kind="Class">AbstractRangeSpec</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -115,18 +112,18 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_range_spec_.rangespec.html#comparator" class="tsd-kind-icon">comparator</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rangespec.html#comparator" class="tsd-kind-icon">comparator</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_range_spec_.rangespec.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_range_spec_.rangespec.html#isgreaterorequalto" class="tsd-kind-icon">is<wbr>Greater<wbr>OrEqual<wbr>To</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_range_spec_.rangespec.html#isgreaterthan" class="tsd-kind-icon">is<wbr>Greater<wbr>Than</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_range_spec_.rangespec.html#isinfinity" class="tsd-kind-icon">is<wbr>Infinity</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_range_spec_.rangespec.html#islessorequalto" class="tsd-kind-icon">is<wbr>Less<wbr>OrEqual<wbr>To</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_range_spec_.rangespec.html#islessthan" class="tsd-kind-icon">is<wbr>Less<wbr>Than</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="rangespec.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="rangespec.html#isgreaterorequalto" class="tsd-kind-icon">is<wbr>Greater<wbr>OrEqual<wbr>To</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="rangespec.html#isgreaterthan" class="tsd-kind-icon">is<wbr>Greater<wbr>Than</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="rangespec.html#isinfinity" class="tsd-kind-icon">is<wbr>Infinity</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="rangespec.html#islessorequalto" class="tsd-kind-icon">is<wbr>Less<wbr>OrEqual<wbr>To</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="rangespec.html#islessthan" class="tsd-kind-icon">is<wbr>Less<wbr>Than</a></li>
 							</ul>
 						</section>
 					</div>
@@ -140,7 +137,7 @@
 					<div class="tsd-signature tsd-kind-icon">comparator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/8a3fb3b/src/range-spec.ts#L39">range-spec.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/f96de55/src/range-spec.ts#L39">range-spec.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -156,7 +153,7 @@
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
 									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, b<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
@@ -190,7 +187,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/8a3fb3b/src/range-spec.ts#L16">range-spec.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/f96de55/src/range-spec.ts#L16">range-spec.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -216,7 +213,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/8a3fb3b/src/range-spec.ts#L27">range-spec.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/f96de55/src/range-spec.ts#L27">range-spec.ts:27</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -242,7 +239,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/8a3fb3b/src/range-spec.ts#L25">range-spec.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/f96de55/src/range-spec.ts#L25">range-spec.ts:25</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -268,7 +265,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/8a3fb3b/src/range-spec.ts#L24">range-spec.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/f96de55/src/range-spec.ts#L24">range-spec.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -298,7 +295,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/8a3fb3b/src/range-spec.ts#L28">range-spec.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/f96de55/src/range-spec.ts#L28">range-spec.ts:28</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -324,7 +321,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/8a3fb3b/src/range-spec.ts#L26">range-spec.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/f96de55/src/range-spec.ts#L26">range-spec.ts:26</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -345,67 +342,64 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_index_.html">&quot;index&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_range_.html">&quot;range&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_range_set_.html">&quot;range-<wbr>set&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_range_set_tree_.html">&quot;range-<wbr>set-<wbr>tree&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_range_set_tree_bintree_.html">&quot;range-<wbr>set-<wbr>tree-<wbr>bintree&quot;</a>
-					</li>
-					<li class="current tsd-kind-module">
-						<a href="../modules/_range_spec_.html">&quot;range-<wbr>spec&quot;</a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/_range_spec_.abstractrangespec.html" class="tsd-kind-icon">Abstract<wbr>Range<wbr>Spec</a>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="../classes/abstractrangespec.html" class="tsd-kind-icon">Abstract<wbr>Range<wbr>Spec</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="../classes/_range_spec_.numberspec.html" class="tsd-kind-icon">Number<wbr>Spec</a>
+					<li class=" tsd-kind-class">
+						<a href="../classes/numberspec.html" class="tsd-kind-icon">Number<wbr>Spec</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="../classes/range.html" class="tsd-kind-icon">Range</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="../classes/rangeset.html" class="tsd-kind-icon">Range<wbr>Set</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="rangesettree.html" class="tsd-kind-icon">Range<wbr>Set<wbr>Tree</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_range_spec_.rangespec.html" class="tsd-kind-icon">Range<wbr>Spec</a>
+					<li class="current tsd-kind-interface tsd-has-type-parameter">
+						<a href="rangespec.html" class="tsd-kind-icon">Range<wbr>Spec</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_range_spec_.rangespec.html#comparator" class="tsd-kind-icon">comparator</a>
+								<a href="rangespec.html#comparator" class="tsd-kind-icon">comparator</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="_range_spec_.rangespec.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a>
+								<a href="rangespec.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="_range_spec_.rangespec.html#isgreaterorequalto" class="tsd-kind-icon">is<wbr>Greater<wbr>OrEqual<wbr>To</a>
+								<a href="rangespec.html#isgreaterorequalto" class="tsd-kind-icon">is<wbr>Greater<wbr>OrEqual<wbr>To</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="_range_spec_.rangespec.html#isgreaterthan" class="tsd-kind-icon">is<wbr>Greater<wbr>Than</a>
+								<a href="rangespec.html#isgreaterthan" class="tsd-kind-icon">is<wbr>Greater<wbr>Than</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="_range_spec_.rangespec.html#isinfinity" class="tsd-kind-icon">is<wbr>Infinity</a>
+								<a href="rangespec.html#isinfinity" class="tsd-kind-icon">is<wbr>Infinity</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="_range_spec_.rangespec.html#islessorequalto" class="tsd-kind-icon">is<wbr>Less<wbr>OrEqual<wbr>To</a>
+								<a href="rangespec.html#islessorequalto" class="tsd-kind-icon">is<wbr>Less<wbr>OrEqual<wbr>To</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="_range_spec_.rangespec.html#islessthan" class="tsd-kind-icon">is<wbr>Less<wbr>Than</a>
+								<a href="rangespec.html#islessthan" class="tsd-kind-icon">is<wbr>Less<wbr>Than</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="treeiterator.html" class="tsd-kind-icon">Tree<wbr>Iterator</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../modules.html#comparator" class="tsd-kind-icon">Comparator</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -416,16 +410,19 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>

@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for tree-range-set">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -49,11 +50,6 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
 			<h1>tree-range-set</h1>
 		</div>
 	</div>
@@ -82,12 +78,12 @@
 				<a href="#npm" id="npm" style="color: inherit; text-decoration: none;">
 					<h4>NPM</h4>
 				</a>
-				<pre><code class="language-bash">npm i tree-range-set
+				<pre><code class="language-bash"><span style="color: #000000">npm i tree-range-set</span>
 </code></pre>
 				<a href="#yarn" id="yarn" style="color: inherit; text-decoration: none;">
 					<h4>Yarn</h4>
 				</a>
-				<pre><code class="language-bash">yarn add tree-range-set
+				<pre><code class="language-bash"><span style="color: #000000">yarn add tree-range-set</span>
 </code></pre>
 				<p>This library was built and tested with Node.js in mind, but there should be no reason for it not work in a modern browser.
 					That being said, handling large sets of ranges in a browser might be suboptimal, so you might want to look at
@@ -102,65 +98,65 @@
 				<a href="#basic-range-arithmetics" id="basic-range-arithmetics" style="color: inherit; text-decoration: none;">
 					<h3>Basic range arithmetics</h3>
 				</a>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { RangeSet, Range } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;tree-range-set&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">RangeSet</span><span style="color: #000000">, </span><span style="color: #001080">Range</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;tree-range-set&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// Create a range of natural numbers</span>
-<span class="hljs-keyword">const</span> naturalRange = RangeSet.numeric().add(Range.closeOpen(<span class="hljs-number">1</span>, <span class="hljs-literal">Infinity</span>));
-naturalRange.contains(<span class="hljs-number">2</span>); <span class="hljs-comment">// yes, a natural number</span>
+<span style="color: #008000">// Create a range of natural numbers</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">naturalRange</span><span style="color: #000000"> = </span><span style="color: #001080">RangeSet</span><span style="color: #000000">.</span><span style="color: #795E26">numeric</span><span style="color: #000000">().</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">Range</span><span style="color: #000000">.</span><span style="color: #795E26">closeOpen</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #0000FF">Infinity</span><span style="color: #000000">));</span>
+<span style="color: #001080">naturalRange</span><span style="color: #000000">.</span><span style="color: #795E26">contains</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">); </span><span style="color: #008000">// yes, a natural number</span>
 
-<span class="hljs-comment">// All the rational numbers?</span>
-<span class="hljs-keyword">const</span> rationalRange = RangeSet.numeric().add(Range.open(-<span class="hljs-literal">Infinity</span>, <span class="hljs-literal">Infinity</span>));
-naturalRange.contains(rationalRange); <span class="hljs-comment">// false, but it works the other way around:</span>
-rationalRange.contains(naturalRange); <span class="hljs-comment">// yes!</span>
+<span style="color: #008000">// All the rational numbers?</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">rationalRange</span><span style="color: #000000"> = </span><span style="color: #001080">RangeSet</span><span style="color: #000000">.</span><span style="color: #795E26">numeric</span><span style="color: #000000">().</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">Range</span><span style="color: #000000">.</span><span style="color: #795E26">open</span><span style="color: #000000">(-</span><span style="color: #0000FF">Infinity</span><span style="color: #000000">, </span><span style="color: #0000FF">Infinity</span><span style="color: #000000">));</span>
+<span style="color: #001080">naturalRange</span><span style="color: #000000">.</span><span style="color: #795E26">contains</span><span style="color: #000000">(</span><span style="color: #001080">rationalRange</span><span style="color: #000000">); </span><span style="color: #008000">// false, but it works the other way around:</span>
+<span style="color: #001080">rationalRange</span><span style="color: #000000">.</span><span style="color: #795E26">contains</span><span style="color: #000000">(</span><span style="color: #001080">naturalRange</span><span style="color: #000000">); </span><span style="color: #008000">// yes!</span>
 
-<span class="hljs-comment">// What if we only want non-natural numbers?</span>
-<span class="hljs-keyword">const</span> nonNaturalRange = rationalRange.subtract(naturalRange);
-nonNaturalRange.contains(-<span class="hljs-number">1</span>); <span class="hljs-comment">// yes</span>
-nonNaturalRange.contains(<span class="hljs-number">1</span>); <span class="hljs-comment">// no, 1 is a natural number</span>
+<span style="color: #008000">// What if we only want non-natural numbers?</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">nonNaturalRange</span><span style="color: #000000"> = </span><span style="color: #001080">rationalRange</span><span style="color: #000000">.</span><span style="color: #795E26">subtract</span><span style="color: #000000">(</span><span style="color: #001080">naturalRange</span><span style="color: #000000">);</span>
+<span style="color: #001080">nonNaturalRange</span><span style="color: #000000">.</span><span style="color: #795E26">contains</span><span style="color: #000000">(-</span><span style="color: #098658">1</span><span style="color: #000000">); </span><span style="color: #008000">// yes</span>
+<span style="color: #001080">nonNaturalRange</span><span style="color: #000000">.</span><span style="color: #795E26">contains</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">); </span><span style="color: #008000">// no, 1 is a natural number</span>
 </code></pre>
 				<a href="#using-a-custom-value-type-for-the-range" id="using-a-custom-value-type-for-the-range" style="color: inherit; text-decoration: none;">
 					<h3>Using a custom value type for the range</h3>
 				</a>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { RangeSet, Range, AbstractRangeSpec, RangeSpec } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;tree-range-set&quot;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">RangeSet</span><span style="color: #000000">, </span><span style="color: #001080">Range</span><span style="color: #000000">, </span><span style="color: #001080">AbstractRangeSpec</span><span style="color: #000000">, </span><span style="color: #001080">RangeSpec</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;tree-range-set&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DateSpec</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractRangeSpec</span>&lt;<span class="hljs-title">Date</span>&gt; <span class="hljs-title">implements</span> <span class="hljs-title">RangeSpec</span>&lt;<span class="hljs-title">Date</span>&gt; </span>{
-  <span class="hljs-keyword">get</span> <span class="hljs-title">comparator</span>(): (<span class="hljs-params">a: <span class="hljs-built_in">Date</span>, b: <span class="hljs-built_in">Date</span></span>) =&gt; <span class="hljs-title">number</span> {
-    <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a.getTime() - b.getTime();
-  }
-  <span class="hljs-comment">// Infinity is optional, it provides special handling for closed ranges enclosed by infinity </span>
-  isInfinity(value: <span class="hljs-built_in">Date</span>): <span class="hljs-built_in">boolean</span> {
-    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-  }
-}
-<span class="hljs-comment">// Instantiate the spec</span>
-<span class="hljs-keyword">const</span> spec = <span class="hljs-keyword">new</span> DateSpec();
+<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">DateSpec</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">AbstractRangeSpec</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Date</span><span style="color: #000000">&gt; </span><span style="color: #0000FF">implements</span><span style="color: #000000"> </span><span style="color: #267F99">RangeSpec</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Date</span><span style="color: #000000">&gt; {</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">get</span><span style="color: #000000"> </span><span style="color: #795E26">comparator</span><span style="color: #000000">(): (</span><span style="color: #001080">a</span><span style="color: #000000">: </span><span style="color: #267F99">Date</span><span style="color: #000000">, </span><span style="color: #001080">b</span><span style="color: #000000">: </span><span style="color: #267F99">Date</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">number</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> (</span><span style="color: #001080">a</span><span style="color: #000000">, </span><span style="color: #001080">b</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000">.</span><span style="color: #795E26">getTime</span><span style="color: #000000">() - </span><span style="color: #001080">b</span><span style="color: #000000">.</span><span style="color: #795E26">getTime</span><span style="color: #000000">();</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Infinity is optional, it provides special handling for closed ranges enclosed by infinity </span>
+<span style="color: #000000">  </span><span style="color: #795E26">isInfinity</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">: </span><span style="color: #267F99">Date</span><span style="color: #000000">): </span><span style="color: #267F99">boolean</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000">;</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+<span style="color: #008000">// Instantiate the spec</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">spec</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">DateSpec</span><span style="color: #000000">();</span>
 
-<span class="hljs-keyword">const</span> todayRange = Range.closeOpen(
-                    <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-01T00:00:00Z&quot;</span>), 
-                    <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-02T00:00:00Z&quot;</span>), 
-                    spec);
-<span class="hljs-keyword">const</span> workingDaysRange = RangeSet.of(spec)
-  .add(todayRange)
-  .add(Range.closeOpen(
-    <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-02T00:00:00Z&quot;</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-02T00:00:00Z&quot;</span>), spec)
-  )
-  .add(Range.closeOpen(
-    <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-05T00:00:00Z&quot;</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-05T00:00:00Z&quot;</span>), spec)
-  );
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">todayRange</span><span style="color: #000000"> = </span><span style="color: #001080">Range</span><span style="color: #000000">.</span><span style="color: #795E26">closeOpen</span><span style="color: #000000">(</span>
+<span style="color: #000000">                    </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-01T00:00:00Z&quot;</span><span style="color: #000000">), </span>
+<span style="color: #000000">                    </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-02T00:00:00Z&quot;</span><span style="color: #000000">), </span>
+<span style="color: #000000">                    </span><span style="color: #001080">spec</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">workingDaysRange</span><span style="color: #000000"> = </span><span style="color: #001080">RangeSet</span><span style="color: #000000">.</span><span style="color: #795E26">of</span><span style="color: #000000">(</span><span style="color: #001080">spec</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">todayRange</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">Range</span><span style="color: #000000">.</span><span style="color: #795E26">closeOpen</span><span style="color: #000000">(</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-02T00:00:00Z&quot;</span><span style="color: #000000">), </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-02T00:00:00Z&quot;</span><span style="color: #000000">), </span><span style="color: #001080">spec</span><span style="color: #000000">)</span>
+<span style="color: #000000">  )</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">Range</span><span style="color: #000000">.</span><span style="color: #795E26">closeOpen</span><span style="color: #000000">(</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-05T00:00:00Z&quot;</span><span style="color: #000000">), </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-05T00:00:00Z&quot;</span><span style="color: #000000">), </span><span style="color: #001080">spec</span><span style="color: #000000">)</span>
+<span style="color: #000000">  );</span>
 
 
-<span class="hljs-comment">// Now we can query them:</span>
-todayRange.contains(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-01T11:00:00Z&quot;</span>)); <span class="hljs-comment">// yes</span>
-workingDaysRange.contains(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-01T11:00:00Z&quot;</span>)); <span class="hljs-comment">// yes, it&#x27;s a working day</span>
+<span style="color: #008000">// Now we can query them:</span>
+<span style="color: #001080">todayRange</span><span style="color: #000000">.</span><span style="color: #795E26">contains</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-01T11:00:00Z&quot;</span><span style="color: #000000">)); </span><span style="color: #008000">// yes</span>
+<span style="color: #001080">workingDaysRange</span><span style="color: #000000">.</span><span style="color: #795E26">contains</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-01T11:00:00Z&quot;</span><span style="color: #000000">)); </span><span style="color: #008000">// yes, it&#039;s a working day</span>
 
-<span class="hljs-comment">// We now can set up convenience functions to check dates based on our ranges:</span>
-<span class="hljs-keyword">const</span> canScheduleMeeting = <span class="hljs-function">(<span class="hljs-params">desiredTime: Range&lt;<span class="hljs-built_in">Date</span>&gt;</span>) =&gt;</span> workingDaysRange.contains(desiredTime);
-canScheduleMeeting(
-  Range.closeOpen(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-02T12:00:00Z&quot;</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-02T13:00:00Z&quot;</span>), spec)
-); <span class="hljs-comment">// yes</span>
-canScheduleMeeting(
-  Range.closeOpen(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-04T12:00:00Z&quot;</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">&quot;2020-07-04T13:00:00Z&quot;</span>), spec)
-); <span class="hljs-comment">// no, we don&#x27;t work on the 4th.</span>
+<span style="color: #008000">// We now can set up convenience functions to check dates based on our ranges:</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #795E26">canScheduleMeeting</span><span style="color: #000000"> = (</span><span style="color: #001080">desiredTime</span><span style="color: #000000">: </span><span style="color: #267F99">Range</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Date</span><span style="color: #000000">&gt;) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">workingDaysRange</span><span style="color: #000000">.</span><span style="color: #795E26">contains</span><span style="color: #000000">(</span><span style="color: #001080">desiredTime</span><span style="color: #000000">);</span>
+<span style="color: #795E26">canScheduleMeeting</span><span style="color: #000000">(</span>
+<span style="color: #000000">  </span><span style="color: #001080">Range</span><span style="color: #000000">.</span><span style="color: #795E26">closeOpen</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-02T12:00:00Z&quot;</span><span style="color: #000000">), </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-02T13:00:00Z&quot;</span><span style="color: #000000">), </span><span style="color: #001080">spec</span><span style="color: #000000">)</span>
+<span style="color: #000000">); </span><span style="color: #008000">// yes</span>
+<span style="color: #795E26">canScheduleMeeting</span><span style="color: #000000">(</span>
+<span style="color: #000000">  </span><span style="color: #001080">Range</span><span style="color: #000000">.</span><span style="color: #795E26">closeOpen</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-04T12:00:00Z&quot;</span><span style="color: #000000">), </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;2020-07-04T13:00:00Z&quot;</span><span style="color: #000000">), </span><span style="color: #001080">spec</span><span style="color: #000000">)</span>
+<span style="color: #000000">); </span><span style="color: #008000">// no, we don&#039;t work on the 4th.</span>
 </code></pre>
 				<a href="#using-a-custom-tree-implementation" id="using-a-custom-tree-implementation" style="color: inherit; text-decoration: none;">
 					<h3>Using a custom tree implementation.</h3>
@@ -175,9 +171,9 @@ canScheduleMeeting(
 					with <a href="https://github.com/Jtalk/tree-range-set/blob/master/src/range-set.perf.ts">this suite</a>.
 					I did my best to isolate potential bias, i.e. in creating relevant configs, but I&#39;m open
 				to future suggestions on how to improve this benchmark. </p>
-				<pre><code><span class="hljs-attribute">drange</span> x <span class="hljs-number">14</span>.<span class="hljs-number">42</span> ops/sec ±<span class="hljs-number">2</span>.<span class="hljs-number">31</span>% (<span class="hljs-number">40</span> runs sampled)
-<span class="hljs-attribute">range</span>-set x <span class="hljs-number">1</span>.<span class="hljs-number">68</span> ops/sec ±<span class="hljs-number">17</span>.<span class="hljs-number">26</span>% (<span class="hljs-number">9</span> runs sampled)
-<span class="hljs-attribute">tree</span>-range-set x <span class="hljs-number">67</span>.<span class="hljs-number">37</span> ops/sec ±<span class="hljs-number">7</span>.<span class="hljs-number">37</span>% (<span class="hljs-number">58</span> runs sampled)
+				<pre><code><span style="color: #001080">drange</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #098658">14.42</span><span style="color: #000000"> </span><span style="color: #001080">ops</span><span style="color: #000000">/</span><span style="color: #001080">sec</span><span style="color: #000000"> ±</span><span style="color: #098658">2.31</span><span style="color: #000000">% (</span><span style="color: #098658">40</span><span style="color: #000000"> </span><span style="color: #001080">runs</span><span style="color: #000000"> </span><span style="color: #001080">sampled</span><span style="color: #000000">)</span>
+<span style="color: #001080">range</span><span style="color: #000000">-</span><span style="color: #001080">set</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #098658">1.68</span><span style="color: #000000"> </span><span style="color: #001080">ops</span><span style="color: #000000">/</span><span style="color: #001080">sec</span><span style="color: #000000"> ±</span><span style="color: #098658">17.26</span><span style="color: #000000">% (</span><span style="color: #098658">9</span><span style="color: #000000"> </span><span style="color: #001080">runs</span><span style="color: #000000"> </span><span style="color: #001080">sampled</span><span style="color: #000000">)</span>
+<span style="color: #001080">tree</span><span style="color: #000000">-</span><span style="color: #001080">range</span><span style="color: #000000">-</span><span style="color: #001080">set</span><span style="color: #000000"> </span><span style="color: #001080">x</span><span style="color: #000000"> </span><span style="color: #098658">67.37</span><span style="color: #000000"> </span><span style="color: #001080">ops</span><span style="color: #000000">/</span><span style="color: #001080">sec</span><span style="color: #000000"> ±</span><span style="color: #098658">7.37</span><span style="color: #000000">% (</span><span style="color: #098658">58</span><span style="color: #000000"> </span><span style="color: #001080">runs</span><span style="color: #000000"> </span><span style="color: #001080">sampled</span><span style="color: #000000">)</span>
 </code></pre>
 				<p>The numbers represent adding and subtracting around 8,000 ranges in a single set, in separate installments of 8 (add 4, subtract 4).</p>
 			</div>
@@ -185,31 +181,37 @@ canScheduleMeeting(
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_index_.html">&quot;index&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_range_.html">&quot;range&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_range_set_.html">&quot;range-<wbr>set&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_range_set_tree_.html">&quot;range-<wbr>set-<wbr>tree&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_range_set_tree_bintree_.html">&quot;range-<wbr>set-<wbr>tree-<wbr>bintree&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_range_spec_.html">&quot;range-<wbr>spec&quot;</a>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/abstractrangespec.html" class="tsd-kind-icon">Abstract<wbr>Range<wbr>Spec</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/numberspec.html" class="tsd-kind-icon">Number<wbr>Spec</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/range.html" class="tsd-kind-icon">Range</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/rangeset.html" class="tsd-kind-icon">Range<wbr>Set</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/rangesettree.html" class="tsd-kind-icon">Range<wbr>Set<wbr>Tree</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/rangespec.html" class="tsd-kind-icon">Range<wbr>Spec</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/treeiterator.html" class="tsd-kind-icon">Tree<wbr>Iterator</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#comparator" class="tsd-kind-icon">Comparator</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -220,14 +222,19 @@ canScheduleMeeting(
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>

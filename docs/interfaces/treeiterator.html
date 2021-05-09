@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for tree-range-set">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -51,13 +52,10 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">tree-range-set</a>
 				</li>
 				<li>
-					<a href="../modules/_range_set_tree_.html">&quot;range-set-tree&quot;</a>
-				</li>
-				<li>
-					<a href="_range_set_tree_.treeiterator.html">TreeIterator</a>
+					<a href="treeiterator.html">TreeIterator</a>
 				</li>
 			</ul>
 			<h1>Interface TreeIterator&lt;T&gt;</h1>
@@ -70,12 +68,12 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>An iterator interface for <a href="_range_set_tree_.rangesettree.html"><code>RangeSetTree</code></a>.</p>
+						<p>An iterator interface for <a href="rangesettree.html"><code>RangeSetTree</code></a>.</p>
 					</div>
 					<p>This interface is expected to be an ascending iterator, i.e. iterating from the lowest element in the set
-						to the highest. Therefore, <a href="_range_set_tree_.treeiterator.html#prev"><code>TreeIterator.prev</code></a> is expected to switch it to the <strong>lower element in the tree</strong>
+						to the highest. Therefore, <a href="treeiterator.html#prev"><code>TreeIterator.prev</code></a> is expected to switch it to the <strong>lower element in the tree</strong>
 					upon each invocation.</p>
-					<p>An empty iterator is represented by <a href="_range_set_tree_.treeiterator.html#data"><code>TreeIterator.data</code></a> being <code>null</code>. Calling <a href="_range_set_tree_.treeiterator.html#prev"><code>TreeIterator.prev</code></a> on
+					<p>An empty iterator is represented by <a href="treeiterator.html#data"><code>TreeIterator.data</code></a> being <code>null</code>. Calling <a href="treeiterator.html#prev"><code>TreeIterator.prev</code></a> on
 					an empty iterator <strong>should re-point it at the highest value in the tree</strong>, returning that value.</p>
 				</div>
 			</section>
@@ -108,13 +106,13 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_range_set_tree_.treeiterator.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="treeiterator.html#data" class="tsd-kind-icon">data</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_range_set_tree_.treeiterator.html#prev" class="tsd-kind-icon">prev</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="treeiterator.html#prev" class="tsd-kind-icon">prev</a></li>
 							</ul>
 						</section>
 					</div>
@@ -125,10 +123,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="data" class="tsd-anchor"></a>
 					<h3>data</h3>
-					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
+					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/8a3fb3b/src/range-set-tree.ts#L103">range-set-tree.ts:103</a></li>
+							<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/f96de55/src/range-set-tree.ts#L103">range-set-tree.ts:103</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,8 +134,8 @@
 							<p>The data of the node this iterator is pointing at.</p>
 						</div>
 						<p>Returns <code>null</code> for an empty iterator, i.e. one pointing before the lowest
-							item of the tree, returned by either <a href="_range_set_tree_.rangesettree.html#iterator"><code>RangeSetTree.iterator</code></a>, or one
-						of the bound finder methods, e.g. <a href="_range_set_tree_.rangesettree.html#lowerbound"><code>RangeSetTree.lowerBound</code></a>.</p>
+							item of the tree, returned by either <a href="rangesettree.html#iterator"><code>RangeSetTree.iterator</code></a>, or one
+						of the bound finder methods, e.g. <a href="rangesettree.html#lowerbound"><code>RangeSetTree.lowerBound</code></a>.</p>
 					</div>
 				</section>
 			</section>
@@ -147,24 +145,24 @@
 					<a name="prev" class="tsd-anchor"></a>
 					<h3>prev</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">prev<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+						<li class="tsd-signature tsd-kind-icon">prev<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/8a3fb3b/src/range-set-tree.ts#L94">range-set-tree.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/Jtalk/tree-range-set/blob/f96de55/src/range-set-tree.ts#L94">range-set-tree.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Move <a href="_range_set_tree_.treeiterator.html#data"><code>TreeIterator.data</code></a> to the next lower element in this tree,
+									<p>Move <a href="treeiterator.html#data"><code>TreeIterator.data</code></a> to the next lower element in this tree,
 									returning said element.</p>
 								</div>
 								<p>It should return <code>null</code> for the lowest element in the tree in the order
 								of iteration, and then the highest element on the next invocation.</p>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -173,51 +171,48 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_index_.html">&quot;index&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_range_.html">&quot;range&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_range_set_.html">&quot;range-<wbr>set&quot;</a>
-					</li>
-					<li class="current tsd-kind-module">
-						<a href="../modules/_range_set_tree_.html">&quot;range-<wbr>set-<wbr>tree&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_range_set_tree_bintree_.html">&quot;range-<wbr>set-<wbr>tree-<wbr>bintree&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/_range_spec_.html">&quot;range-<wbr>spec&quot;</a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_range_set_tree_.rangesettree.html" class="tsd-kind-icon">Range<wbr>Set<wbr>Tree</a>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="../classes/abstractrangespec.html" class="tsd-kind-icon">Abstract<wbr>Range<wbr>Spec</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/numberspec.html" class="tsd-kind-icon">Number<wbr>Spec</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="../classes/range.html" class="tsd-kind-icon">Range</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="../classes/rangeset.html" class="tsd-kind-icon">Range<wbr>Set</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="rangesettree.html" class="tsd-kind-icon">Range<wbr>Set<wbr>Tree</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="rangespec.html" class="tsd-kind-icon">Range<wbr>Spec</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_range_set_tree_.treeiterator.html" class="tsd-kind-icon">Tree<wbr>Iterator</a>
+					<li class="current tsd-kind-interface tsd-has-type-parameter">
+						<a href="treeiterator.html" class="tsd-kind-icon">Tree<wbr>Iterator</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_range_set_tree_.treeiterator.html#data" class="tsd-kind-icon">data</a>
+								<a href="treeiterator.html#data" class="tsd-kind-icon">data</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="_range_set_tree_.treeiterator.html#prev" class="tsd-kind-icon">prev</a>
+								<a href="treeiterator.html#prev" class="tsd-kind-icon">prev</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../modules/_range_set_tree_.html#comparator" class="tsd-kind-icon">Comparator</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../modules.html#comparator" class="tsd-kind-icon">Comparator</a>
 					</li>
 				</ul>
 			</nav>
@@ -229,16 +224,19 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
