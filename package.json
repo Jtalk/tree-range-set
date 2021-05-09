@@ -8,7 +8,7 @@
     "build": "tsc --build tsconfig.build.json",
     "build:perf": "tsc --build tsconfig.perf.json",
     "perf": "npm run build:perf && node dist/range-set.perf.js",
-    "doc": "typedoc --tsconfig tsconfig.build.json",
+    "doc": "typedoc --tsconfig tsconfig.build.json src/index.ts",
     "test": "jest",
     "test:watch": "jest --watch"
   },
